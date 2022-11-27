@@ -17,10 +17,10 @@ const AuthContextProvider = (props) => {
   useEffect(() => {
     const fetchLoggedinUser = async () => {
       await axios
-        .get(`/cookie`)
-        .then((res) => {
-          return setIsLogin(res.data);
-        });
+				.get(`${process.env.REACT_APP_SERVER_URL}/cookie`)
+				.then((res) => {
+					return setIsLogin(res.data);
+				});
     };
     fetchLoggedinUser();
   }, [state]);
