@@ -17,7 +17,7 @@ const AuthContextProvider = (props) => {
   useEffect(() => {
     const fetchLoggedinUser = async () => {
       await axios
-				.get(`/cookie`)
+				.get(`https://pairs-server.herokuapp.com/cookie`)
 				.then((res) => {
 					return setIsLogin(res.data);
 				});
