@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import { AuthContext } from '../AuthContext';
 import { baseUrl } from '../helper/baseUrl';
 
-const socket = io(baseUrl, { query: { id: "1234" } });
+const socket = io(process.env.REACT_APP_SERVER_URL);
 
 const Chatroom = () => {
   const params = useParams();
