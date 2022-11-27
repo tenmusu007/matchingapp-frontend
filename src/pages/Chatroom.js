@@ -14,15 +14,13 @@ import Paper from '@mui/material/Paper';
 import { AuthContext } from '../AuthContext';
 import { baseUrl } from '../helper/baseUrl';
 
-const socket = io(
-	process.env.REACT_APP_SERVER_URL,
-	{
-		withCredentials: true,
+const socket = io(process.env.REACT_APP_SERVER_URL, {
+	withCredentials: true,
+	transports: ["websocket"],
+	extraHeaders: {
+		"my-custom-header": "abcd",
 	},
-	{
-		transports: ["websocket"],
-	}
-);
+});
 
 const Chatroom = () => {
   const params = useParams();
