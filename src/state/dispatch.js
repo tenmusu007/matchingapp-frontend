@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const loginCall = async (user, dispatch) => {
 	dispatch({ type: "LOGIN_START" });
-	const baseURL = "https://pairs-server.herokuapp.com/login";
+	const baseURL = "https://pairs-server.herokuapp.com/auth/login";
 
 	try {
 		const res = await axios.post(baseURL, user, { withCredentials: true });
