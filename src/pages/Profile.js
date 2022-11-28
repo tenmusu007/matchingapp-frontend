@@ -24,7 +24,7 @@ const Profile = () => {
 				.get(
 					`${process.env.REACT_APP_SERVER_URL}/getuserinfo`,
 					{ id: "6373f48b2de13e26d98a89c7" },
-					{ withCredentials: true }
+					// { withCredentials: true }
 				)
         .then((response) => {
           console.log(response.data);
@@ -33,7 +33,7 @@ const Profile = () => {
 						.post(
 							`${process.env.REACT_APP_SERVER_URL}/profileimage`,
 							{ user_id: user?._id },
-							{ withCredentials: true }
+							// { withCredentials: true }
 						)
 						.then((res) => {
 							if (res.data !== "nothing") {
