@@ -10,8 +10,8 @@ import Navbar from "./components/Navbar";
 import { AuthContext } from "./AuthContext";
 
 function App() {
-	const { isLogin } = useContext(AuthContext);
-
+  const { isLogin } = useContext(AuthContext);
+  console.log(isLogin);
 	return (
 		<div className='App'>
 			<Routes>

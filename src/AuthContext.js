@@ -20,7 +20,8 @@ const AuthContextProvider = (props) => {
 				.get("https://pairs-server.herokuapp.com/cookie", {
 					withCredentials: true,
 				})
-				.then((res) => {
+        .then((res) => {
+          console.log("cooki",res);
 					return setIsLogin(res.data);
 				});
 		};
