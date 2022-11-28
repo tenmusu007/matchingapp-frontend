@@ -45,7 +45,7 @@ const Profile = () => {
 	return (
 		<>
 			<MainLayout>
-				<Box
+				{user?  <Box
 					sx={{
 						display: "flex",
 						flexDirection: "column",
@@ -77,7 +77,40 @@ const Profile = () => {
 							/>
 						</Grid>
 					</Box>
-				</Box>
+				</Box> : <h1>nothing</h1>}
+				{/* <Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						maxWidth: 345,
+						mx: "auto",
+						py: "1.3rem",
+					}}
+				>
+					<Avatar src={image} sx={{ m: 1, width: 56, height: 56 }} />
+					<Typography variant='h1'>{user?.username}</Typography>
+					<Box>
+						<Grid>
+							<IconButton
+								aria-label='edit'
+								color={"primary"}
+								size='large'
+								onClick={handleClickOpen}
+							>
+								<EditIcon />
+							</IconButton>
+						</Grid>
+						<Grid>
+							<BasicModal
+								open={open}
+								setOpen={setOpen}
+								user={user}
+								setUser={setUser}
+							/>
+						</Grid>
+					</Box>
+				</Box> */}
 			</MainLayout>
 		</>
 	);
