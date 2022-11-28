@@ -5,7 +5,7 @@ export const loginCall = async (user, dispatch) => {
 
   try {
     const res = await axios.post(
-			`/login`,
+			`${process.env.REACT_APP_SERVER_URL}/login`,
 			user
 		);
     dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
