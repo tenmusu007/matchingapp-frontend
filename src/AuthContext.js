@@ -17,7 +17,7 @@ const AuthContextProvider = (props) => {
   useEffect(() => {
     const fetchLoggedinUser = async () => {
       await axios
-				.get(`/cookie`, {
+				.get(`${process.env.REACT_APP_SERVER_URL}/cookie`, {
 					withCredentials: false,
 				})
 				.then((res) => {
