@@ -26,7 +26,8 @@ const Profile = () => {
 					{ id: "6373f48b2de13e26d98a89c7" },
 					{ withCredentials: true }
 				)
-				.then((response) => {
+        .then((response) => {
+          console.log(response.data);
 					setUser(response.data);
 					axios
 						.post(
