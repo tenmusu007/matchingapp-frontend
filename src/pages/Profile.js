@@ -22,7 +22,7 @@ const Profile = () => {
       // const baseURL = 'http://localhost:8000';
       await axios
 				.get(
-					`${baseUrl}/getuserinfo`,
+					`${process.env.REACT_APP_SERVER_URL}/getuserinfo`,
 					{ id: "6373f48b2de13e26d98a89c7" },
 					{ withCredentials: true }
 				)
@@ -30,7 +30,7 @@ const Profile = () => {
 					setUser(response.data);
 					axios
 						.post(
-							`${baseUrl}/profileimage`,
+							`${process.env.REACT_APP_SERVER_URL}/profileimage`,
 							{ user_id: user?._id },
 							{ withCredentials: true }
 						)
