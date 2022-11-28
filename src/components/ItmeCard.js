@@ -1,119 +1,340 @@
-import React, { useState, useContext, useEffect } from "react";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import IconButton from "@mui/material/IconButton";
-import InfoIcon from "@mui/icons-material/Info";
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import Collapse from "@mui/material/Collapse";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Pill from "./Pill";
-import Stack from "@mui/material/Stack";
-import CardActions from "@mui/material/CardActions";
-import BasicButton from "./BasicButton";
-import userImageAtsu from "../image/userImages/test.jpg";
-import { AuthContext } from "../AuthContext";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import Autocomplete from "@mui/material/Autocomplete";
+import BoxLayout from "../Layout/BoxLayout";
 import axios from "axios";
-import { baseUrl } from "../helper/baseUrl";
-const ExpandInfo = styled((props) => {
-	const { expand, ...other } = props;
-	return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-	transform: !expand ? "rotate(0deg)" : "rotate(360deg)",
-	marginLeft: "auto",
-	transition: theme.transitions.create("transform", {
-		duration: theme.transitions.duration.shortest,
-	}),
+import { courses, genders, sexualOrientations } from "../Data/SelectBoxOptions";
+import imageCompression from "browser-image-compression";
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+	"& .MuiDialogContent-root": {
+		padding: theme.spacing(2),
+	},
+	"& .MuiDialogActions-root": {
+		padding: theme.spacing(1),
+	},
 }));
+function BootstrapDialogTitle(props) {
+	const { children, onClose, ...other } = props;
 
-const ItmeCard = ({ usersLength, userData, usersIndex, setusersIndex }) => {
-	const { user } = useContext(AuthContext);
-	const [expanded, setExpanded] = useState(false);
-	const handleExpandClick = () => {
-		setExpanded(!expanded);
-	};
-
-	const showNextUser = () => {
-		if (usersIndex < usersLength) {
-			const sendInfo = {to: userData._id };
-			axios.post(`/sendlike`, sendInfo, { withCredentials: true });
-			return setusersIndex(usersIndex + 1);
-		} else {
-			return alert("No more users!");
-		}
-  };
-  const [image, setImage]=useState("")
-	useEffect(() => {
-		// const baseURL = "http://localhost:8000/userimage";
-    axios
-			.post(
-				`${baseUrl}/userimage`,
-				{ user_id: userData?._id },
-				{ withCredentials: true }
-			)
-			.then((res) => {
-				setImage(res.data);
-			});
-	}, [usersIndex]);
 	return (
-		<>
-			<Card
-				sx={{ maxWidth: 345, mx: "auto", my: "1.3rem" }}
-				key={userData?._id}
-			>
-				<ImageListItem>
-					<img
-						src={image}
-						srcSet={image}
-						alt={`${userData?.username} pic`}
-						loading='lazy'
-					/>
-					<ImageListItemBar
-						title={`${userData?.username} ${userData?.age} `}
-						subtitle={userData?.course}
-						actionIcon={
-							<ExpandInfo
-								sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-								expand={expanded}
-								aria-expanded={expanded}
-								aria-label='show more'
-								onClick={handleExpandClick}
-							>
-								{!expanded ? (
-									<InfoIcon />
-								) : (
-									<InfoIcon sx={{ color: "#f8f8f8" }} />
-								)}
-							</ExpandInfo>
-						}
-					/>
-				</ImageListItem>
-
-				<CardContent>
-					<CardActions
-						disableSpacing
-						sx={{
-							justifyContent: "space-around",
-						}}
-					>
-						<BasicButton text='no' />
-						<BasicButton text='like' onClick={() => showNextUser()} />
-					</CardActions>
-					<Collapse in={expanded} timeout='auto' unmountOnExit>
-						<Typography variant='h1'>About me</Typography>
-						<Typography variant='body1'>{userData?.about}</Typography>
-						<Typography variant='h1'>My Interests</Typography>
-						<Stack direction='row' spacing={1} sx={{ mr: 0.3 }}>
-							{userData?.interests?.map((interest, index) => {
-								return <Pill text={interest.hobby} key={interest.id} />;
-							})}
-						</Stack>
-					</Collapse>
-				</CardContent>
-			</Card>
-		</>
+		<DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+			{children}
+			{onClose ? (
+				<IconButton
+					aria-label='close'
+					onClick={onClose}
+					sx={{
+						position: "absolute",
+						right: 8,
+						top: 8,
+						color: (theme) => theme.palette.grey[500],
+					}}
+				>
+					<CloseIcon />
+				</IconButton>
+			) : null}
+		</DialogTitle>
 	);
+}
+BootstrapDialogTitle.propTypes = {
+	children: PropTypes.node,
+	onClose: PropTypes.func.isRequired,
 };
 
-export default ItmeCard;
+export default function BasicModal(props) {
+	const { open, setOpen, user, setUser } = props;
+	const nameRef = useRef(null);
+	const aboutRef = useRef(null);
+	const courseRef = useRef(null);
+	const genderRef = useRef(null);
+	const ageRef = useRef(null);
+
+	// image
+	const [selectedImage, setSelectedImage] = useState(null);
+	const [imageUrl, setImageUrl] = useState(null);
+
+	// set interests data from db
+	const [interestsData, setInterestsData] = useState([]);
+
+	// these data are from file
+	const [course, setCourse] = useState("NONE");
+	const [gender, setGender] = useState(0);
+	const [interests, setInterests] = useState([]);
+	const [inputInterestsVal, setInputInterestsVal] = useState("");
+	const [sexualOri, setSexualOri] = useState([]);
+	const [inputSexualOriVal, setInputSexualOriVal] = useState("");
+
+	useEffect(() => {
+		const fetchData = async () => {
+			await axios
+				.get("https://pairs-server.herokuapp.com/interests")
+				.then((response) => {
+					axios
+						.get("https://pairs-server.herokuapp.com/getuserinfo", {
+							withCredentials: true,
+						})
+						.then((res) => {
+							setInterestsData(response.data);
+							setCourse(res.data?.course);
+							setGender(res.data?.gender);
+							setSexualOri(res.data?.sexual_orientation);
+							setInterests(res.data?.interests);
+						});
+				});
+
+			if (selectedImage) {
+				setImageUrl(URL.createObjectURL(selectedImage));
+			}
+		};
+
+		fetchData();
+	}, [selectedImage, user]);
+	const compressImage = async (image) => {
+		const imageFile = image;
+		const options = {
+			maxSizeMB: 1,
+			maxWidthOrHeight: 1920,
+			useWebWorker: true,
+		};
+		const compressedFile = await imageCompression(imageFile, options);
+		return compressedFile;
+	};
+	const handleCloseModal = async () => {
+		setOpen(false);
+
+		const updatedSexualOri = sexualOri?.map((chosenSex) => chosenSex);
+		const UpdatedInterests = interests?.map(
+			(chosenInterests) => chosenInterests
+		);
+
+		const userInfo = {
+			_id: user._id,
+			email: user.email,
+			username: nameRef.current.value,
+			// image: imageUrl,
+			about: aboutRef.current.value,
+			age: Number(ageRef.current.value),
+			course: courseRef.current.value,
+			gender: genderRef.current.value,
+			interests: UpdatedInterests,
+			sexual_orientation: updatedSexualOri,
+		};
+		const placedUserInfo = JSON.stringify(user);
+		const updatedUserInfo = JSON.stringify(userInfo);
+		const formData = new FormData();
+
+		console.log("image", selectedImage);
+		const image = await compressImage(selectedImage);
+		formData.append("image", image);
+		formData.append("userInfo", updatedUserInfo);
+
+		if (placedUserInfo !== updatedUserInfo) {
+			const baseURL = "https://pairs-server.herokuapp.com/setting";
+			axios
+				.post(baseURL, formData, {
+					headers: { "Content-Type": "multipart/form-data" },
+				})
+				.then((res) => {
+					setUser(userInfo);
+				});
+		}
+	};
+
+	const handleState = (event, setState) => {
+		setState(event.target.value);
+	};
+
+	return (
+		<>
+			<BootstrapDialog
+				onClose={handleCloseModal}
+				aria-labelledby='customized-dialog-hobby'
+				open={open}
+			>
+				<BootstrapDialogTitle
+					id='customized-dialog-hobby'
+					onClose={handleCloseModal}
+					sx={{
+						width: 310,
+					}}
+				>
+					Edit
+				</BootstrapDialogTitle>
+				<DialogContent dividers>
+					{/* image */}
+					<BoxLayout>
+						<Button variant='contained' component='label'>
+							Upload image
+							<input
+								type='file'
+								hidden
+								onChange={(e) => setSelectedImage(e.target.files[0])}
+							/>
+						</Button>
+						{imageUrl && selectedImage && (
+							<Box mt={2} textAlign='center'>
+								<img src={imageUrl} alt={selectedImage.name} height='100px' />
+							</Box>
+						)}
+					</BoxLayout>
+
+					{/* username */}
+					<BoxLayout>
+						<TextField
+							id='standard-multiline-static'
+							inputRef={nameRef}
+							label='Name'
+							// value={user?.username}
+							defaultValue={user?.username}
+							placeholder='Your name'
+							variant='standard'
+						/>
+					</BoxLayout>
+
+					{/* age */}
+					<BoxLayout>
+						<TextField
+							id='standard-multiline-static'
+							type='number'
+							inputRef={ageRef}
+							InputProps={{ inputProps: { min: 1, max: 2 } }}
+							label='Age'
+							defaultValue={user?.age}
+							placeholder='Your age'
+							variant='standard'
+						/>
+					</BoxLayout>
+
+					{/* about */}
+					<BoxLayout>
+						<TextField
+							id='standard-multiline-static'
+							inputRef={aboutRef}
+							label='About me'
+							multiline
+							rows={10}
+							defaultValue={user?.about}
+							placeholder='Tell us about yourself'
+							variant='standard'
+						/>
+					</BoxLayout>
+
+					{/* Interests  */}
+					<BoxLayout>
+						<Autocomplete
+							multiple
+							sx={{ width: 260 }}
+							limitTags={5}
+							name='interests'
+							id='multiple-interests'
+							options={interestsData}
+							getOptionLabel={(option) => option.hobby}
+							value={interests}
+							isOptionEqualToValue={(option, value) => option.id === value.id}
+							defaultValue={user?.interests}
+							onChange={(event, newValue) => {
+								setInterests(newValue);
+							}}
+							inputValue={inputInterestsVal}
+							onInputChange={(event, newInputValue) => {
+								setInputInterestsVal(newInputValue);
+							}}
+							renderInput={(params) => (
+								<TextField
+									name='auto-input'
+									{...params}
+									label='Select your interests'
+									placeholder='Interests'
+								/>
+							)}
+						/>
+					</BoxLayout>
+
+					{/* courses */}
+					<BoxLayout>
+						<TextField
+							id='outlined-select-currency'
+							select
+							label='Course'
+							value={course}
+							defaultValue={user?.course}
+							inputRef={courseRef}
+							onChange={(e) => handleState(e, setCourse)}
+						>
+							{courses.map((option) => (
+								<MenuItem key={option.value} value={option.value}>
+									{option.label}
+								</MenuItem>
+							))}
+						</TextField>
+					</BoxLayout>
+
+					{/* gendr */}
+					<BoxLayout>
+						<TextField
+							id='outlined-select-currency'
+							select
+							inputRef={genderRef}
+							label='Gender'
+							value={gender}
+							defaultValue={user?.gender}
+							onChange={(e) => handleState(e, setGender)}
+						>
+							{genders.map((option) => (
+								<MenuItem key={option.value} value={option.value}>
+									{option.label}
+								</MenuItem>
+							))}
+						</TextField>
+					</BoxLayout>
+					{/* sexual orieantation */}
+					<BoxLayout>
+						<Autocomplete
+							multiple
+							sx={{ width: 260 }}
+							limitTags={5}
+							name='sexualOrientation'
+							id='multiple-sexualOrientation'
+							options={sexualOrientations}
+							getOptionLabel={(option) => option.label}
+							isOptionEqualToValue={(option, value) => option.id === value.id}
+							value={sexualOri}
+							defaultValue={user?.sexual_orientation}
+							onChange={(event, newValue) => {
+								setSexualOri(newValue);
+							}}
+							inputValue={inputSexualOriVal}
+							onInputChange={(event, newInputValue) => {
+								setInputSexualOriVal(newInputValue);
+							}}
+							renderInput={(params) => (
+								<TextField
+									name='auto-input'
+									{...params}
+									label='Select your Sexual Orientation'
+									placeholder='Sexual Orientation'
+								/>
+							)}
+						/>
+					</BoxLayout>
+				</DialogContent>
+				<DialogActions>
+					<Button autoFocus onClick={handleCloseModal}>
+						Save changes
+					</Button>
+				</DialogActions>
+			</BootstrapDialog>
+		</>
+	);
+}
