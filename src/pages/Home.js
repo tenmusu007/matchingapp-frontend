@@ -14,9 +14,13 @@ const Home = () => {
     const fetchMatchableUsers = async () => {
       // const baseURL = `/user`;
       await axios
-				.get(`${process.env.REACT_APP_SERVER_URL}/user`, {
-					withCredentials: true,
-				})
+				.get(
+					`${process.env.REACT_APP_SERVER_URL}/user`,
+					{ id: "6373f48b2de13e26d98a89c7" },
+					{
+						withCredentials: true,
+					}
+				)
 				.then((res) => {
 					setUsersData(res.data);
 				});

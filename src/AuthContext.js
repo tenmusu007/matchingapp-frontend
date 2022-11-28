@@ -21,8 +21,10 @@ const AuthContextProvider = (props) => {
 					withCredentials: true,
 				})
         .then((res) => {
-          console.log("cookie",res.data);
-					return setIsLogin(res.data);
+          console.log("cookie", res.data);
+          
+					// return setIsLogin(res.data);
+					return setIsLogin(true);
 				});
     };
     fetchLoggedinUser();

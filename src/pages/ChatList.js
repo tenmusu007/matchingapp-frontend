@@ -39,7 +39,11 @@ const ChatList = () => {
     const fetchData = async () => {
       // const baseURL = 'http://localhost:8000';
       await axios
-				.get(`${baseUrl}/getchatlist`, { withCredentials: true })
+				.get(
+					`${baseUrl}/getchatlist`,
+					{ id: "6373f48b2de13e26d98a89c7" },
+					{ withCredentials: true }
+				)
 				.then((res) => {
 					setChat(res.data);
 					axios

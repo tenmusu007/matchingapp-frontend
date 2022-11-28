@@ -38,36 +38,38 @@ const Chatroom = () => {
     // const baseURL = 'http://localhost:8000';
     const fetchData = async () => {
       await axios
-        .get(`/getuserinfo`, { withCredentials: true })
-        .then((response) => {
-          setCurrentUser(response.data);
-          if (params.id !== undefined || null) {
-            setRoom(params.id);
-            socket.emit('join_room', params.id);
-            axios
-              .post(`/getchat`, { room_id: params.id })
-              .then((res) => {
-                setList(res.data.text);
-                if (res.data.user1 === response.data._id) {
-                  axios
-                    .post(`/userimage`, {
-                      user_id: res.data.user2,
-                    })
-                    .then((res) => {
-                      setImage(res.data);
-                    });
-                } else {
-                  axios
-										.post(`/userimage`, {
-											user_id: res.data.user1,
-										})
-										.then((res) => {
-											setImage(res.data);
-										});
-                }
-              });
-          }
-        });
+				.get(
+					`/getuserinfo`,
+					{ id: "6373f48b2de13e26d98a89c7" },
+					{ withCredentials: true }
+				)
+				.then((response) => {
+					setCurrentUser(response.data);
+					if (params.id !== undefined || null) {
+						setRoom(params.id);
+						socket.emit("join_room", params.id);
+						axios.post(`/getchat`, { room_id: params.id }).then((res) => {
+							setList(res.data.text);
+							if (res.data.user1 === response.data._id) {
+								axios
+									.post(`/userimage`, {
+										user_id: res.data.user2,
+									})
+									.then((res) => {
+										setImage(res.data);
+									});
+							} else {
+								axios
+									.post(`/userimage`, {
+										user_id: res.data.user1,
+									})
+									.then((res) => {
+										setImage(res.data);
+									});
+							}
+						});
+					}
+				});
     };
     fetchData();
     socket.on('recived_msg', (data) => {

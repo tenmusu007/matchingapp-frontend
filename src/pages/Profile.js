@@ -21,7 +21,11 @@ const Profile = () => {
     const fetchData = async () => {
       // const baseURL = 'http://localhost:8000';
       await axios
-				.get(`${baseUrl}/getuserinfo`, { withCredentials: true })
+				.get(
+					`${baseUrl}/getuserinfo`,
+					{ id: "6373f48b2de13e26d98a89c7" },
+					{ withCredentials: true }
+				)
 				.then((response) => {
 					setUser(response.data);
 					axios
