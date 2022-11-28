@@ -82,7 +82,7 @@ export default function BasicModal(props) {
 				.get(`${process.env.REACT_APP_SERVER_URL}/interests`)
 				.then((response) => {
 					axios
-						.get(`${baseUrl}/getuserinfo`, { withCredentials: true })
+						.get(`${baseUrl}/api/getuserinfo`, { withCredentials: true })
 						.then((res) => {
 							setInterestsData(response.data);
 							setCourse(res.data?.course);
