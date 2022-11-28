@@ -15,6 +15,7 @@ import BasicButton from "./BasicButton";
 import userImageAtsu from "../image/userImages/test.jpg";
 import { AuthContext } from "../AuthContext";
 import axios from "axios";
+import { baseUrl } from "../helper/baseUrl";
 const ExpandInfo = styled((props) => {
 	const { expand, ...other } = props;
 	return <IconButton {...other} />;
@@ -47,7 +48,7 @@ const ItmeCard = ({ usersLength, userData, usersIndex, setusersIndex }) => {
 		// const baseURL = "http://localhost:8000/userimage";
     axios
 			.post(
-				`/userimage`,
+				`${baseUrl}/userimage`,
 				{ user_id: userData?._id },
 				{ withCredentials: true }
 			)

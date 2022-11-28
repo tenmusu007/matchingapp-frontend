@@ -59,13 +59,13 @@ const Auth = () => {
       };
 
       axios
-        .post(`/signup`, newUser)
-        .then(() => {
-          return navigate('/login');
-        })
-        .catch((err) => {
-          console.log('ERR', err);
-        });
+				.post(`${baseUrl}/signup`, newUser)
+				.then(() => {
+					return navigate("/login");
+				})
+				.catch((err) => {
+					console.log("ERR", err);
+				});
     }
   };
 

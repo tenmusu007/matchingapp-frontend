@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchMatchableUsers = async () => {
       // const baseURL = `/user`;
-      await axios.get(`/user`, { withCredentials: true }).then((res) => {
+      await axios.get(`${baseUrl}/user`, { withCredentials: true }).then((res) => {
 				setUsersData(res.data);
 			});
     };

@@ -21,12 +21,12 @@ const Profile = () => {
     const fetchData = async () => {
       // const baseURL = 'http://localhost:8000';
       await axios
-        .get(`/getuserinfo`, { withCredentials: true })
-        .then((response) => {
-          setUser(response.data);
-          axios
+				.get(`${baseUrl}/getuserinfo`, { withCredentials: true })
+				.then((response) => {
+					setUser(response.data);
+					axios
 						.post(
-							`/profileimage`,
+							`${baseUrl}/profileimage`,
 							{ user_id: user?._id },
 							{ withCredentials: true }
 						)
@@ -35,7 +35,7 @@ const Profile = () => {
 								setImage(res.data);
 							}
 						});
-        });
+				});
     };
 
     fetchData();

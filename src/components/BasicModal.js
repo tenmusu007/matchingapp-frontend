@@ -78,17 +78,17 @@ export default function BasicModal(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      await axios.get(`/interests`).then((response) => {
-        axios
-          .get(`/getuserinfo`, { withCredentials: true })
+      await axios.get(`${baseUrl}/interests`).then((response) => {
+				axios
+					.get(`${baseUrl}/getuserinfo`, { withCredentials: true })
 					.then((res) => {
-            setInterestsData(response.data);
-            setCourse(res.data?.course);
-            setGender(res.data?.gender);
-            setSexualOri(res.data?.sexual_orientation);
-            setInterests(res.data?.interests);
-          });
-      });
+						setInterestsData(response.data);
+						setCourse(res.data?.course);
+						setGender(res.data?.gender);
+						setSexualOri(res.data?.sexual_orientation);
+						setInterests(res.data?.interests);
+					});
+			});
 
       if (selectedImage) {
         setImageUrl(URL.createObjectURL(selectedImage));

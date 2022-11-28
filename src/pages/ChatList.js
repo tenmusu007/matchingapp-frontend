@@ -12,7 +12,7 @@ import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
-// import { baseUrl } from '../helper/baseUrl';
+import { baseUrl } from '../helper/baseUrl';
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     backgroundColor: '#273885',
@@ -39,11 +39,11 @@ const ChatList = () => {
     const fetchData = async () => {
       // const baseURL = 'http://localhost:8000';
       await axios
-				.get(`/getchatlist`, { withCredentials: true })
+				.get(`${baseUrl}/getchatlist`, { withCredentials: true })
 				.then((res) => {
 					setChat(res.data);
 					axios
-						.post(`/chatlistimage`, { user_id: res.data })
+						.post(`${baseUrl}/chatlistimage`, { user_id: res.data })
 						.then((res) => {
 							setImage(res.data);
 						});
