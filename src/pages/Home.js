@@ -9,6 +9,7 @@ import NomoreUser from "./NomoreUser";
 
 const Home = () => {
 	const [usersData, setUsersData] = useState([]);
+	console.log("usersData",usersData);
 	const [usersIndex, setusersIndex] = useState(0);
 	useEffect(() => {
 		const fetchMatchableUsers = async () => {
