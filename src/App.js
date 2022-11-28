@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Routes>
+      {/* <Routes>
         <Route path='/' element={isLogin ? <Home /> : <Login />} />
         <Route
           path='/chat/room=:id'
@@ -24,6 +24,17 @@ function App() {
         <Route path='/profile' element={isLogin ? <Profile /> : <Login />} />
         <Route path='/login' element={isLogin ? <Profile /> : <Login />} />
         <Route path='/signup' element={isLogin ? <Profile /> : <Signup />} />
+      </Routes> */}
+      <Routes>
+        <Route path='/' element={isLogin ? <Home /> : <Login />} />
+        <Route
+          path='/chat/room=:id'
+          element={<Chatroom />}
+        />
+        <Route path='/chat' element={<ChatList />} />
+        <Route path='/profile' element={<Profile /> } />
+        <Route path='/login' element={<Profile /> } />
+        <Route path='/signup' element={<Profile />} />
       </Routes>
       {isLogin ? <Navbar /> : ''}
     </div>
