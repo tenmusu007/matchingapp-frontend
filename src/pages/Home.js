@@ -13,9 +13,13 @@ const Home = () => {
   useEffect(() => {
     const fetchMatchableUsers = async () => {
       // const baseURL = `/user`;
-      await axios.get(`${baseUrl}/user`, { withCredentials: true }).then((res) => {
-				setUsersData(res.data);
-			});
+      await axios
+				.get(`${process.env.REACT_APP_SERVER_URL}/user`, {
+					withCredentials: true,
+				})
+				.then((res) => {
+					setUsersData(res.data);
+				});
     };
     fetchMatchableUsers();
   }, []);
