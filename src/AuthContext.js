@@ -12,7 +12,7 @@ export const AuthContext = createContext(initialState);
 
 const AuthContextProvider = (props) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState("6373f48b2de13e26d98a89c7");
 
   useEffect(() => {
     const fetchLoggedinUser = async () => {
