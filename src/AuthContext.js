@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState, createContext, useEffect, useReducer } from 'react';
 import AuthReducer from './state/AuthReducer';
-import { baseUrl } from './helper/baseUrl';
 const initialState = {
   user: null,
   isFetching: false,
@@ -17,7 +16,7 @@ const AuthContextProvider = (props) => {
   useEffect(() => {
     const fetchLoggedinUser = async () => {
       await axios
-				.get(`/cookie`, {
+				.get(`api/cookie`, {
 					withCredentials: false,
 				})
 				.then((res) => {

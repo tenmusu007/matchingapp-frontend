@@ -15,7 +15,6 @@ import BasicButton from "./BasicButton";
 import userImageAtsu from "../image/userImages/test.jpg";
 import { AuthContext } from "../AuthContext";
 import axios from "axios";
-import { baseUrl } from "../helper/baseUrl";
 const ExpandInfo = styled((props) => {
 	const { expand, ...other } = props;
 	return <IconButton {...other} />;
