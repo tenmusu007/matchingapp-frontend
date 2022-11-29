@@ -43,7 +43,7 @@ const ChatList = () => {
 				.then((res) => {
 					setChat(res.data);
 					axios
-						.post(`${baseURL}/chat/chatlistimage`, { user_id: res.data })
+						.post(`${baseURL}/image/chatlistimage`, { user_id: res.data })
 						.then((res) => {
 							setImage(res.data);
 						});
