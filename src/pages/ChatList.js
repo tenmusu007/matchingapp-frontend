@@ -39,11 +39,11 @@ const ChatList = () => {
 		const fetchData = async () => {
 			const baseURL = "https://pairs-server.herokuapp.com";
 			await axios
-				.get(`${baseURL}/getchatlist`, { withCredentials: true })
+				.get(`${baseURL}/chat/getchatlist`, { withCredentials: true })
 				.then((res) => {
 					setChat(res.data);
 					axios
-						.post(`${baseURL}/chatlistimage`, { user_id: res.data })
+						.post(`${baseURL}/chat/chatlistimage`, { user_id: res.data })
 						.then((res) => {
 							setImage(res.data);
 						});

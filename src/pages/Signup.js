@@ -55,7 +55,7 @@ const Auth = () => {
 				setConfirmPassword
 			) === true
 		) {
-			const baseURL = "https://pairs-server.herokuapp.com/signup";
+			const baseURL = "https://pairs-server.herokuapp.com/auth/signup";
 			const newUser = {
 				email: refEmail.current.value,
 				password: refPassword.current.value,

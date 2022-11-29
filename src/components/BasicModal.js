@@ -79,10 +79,10 @@ export default function BasicModal(props) {
 	useEffect(() => {
 		const fetchData = async () => {
 			await axios
-				.get(`${process.env.REACT_APP_SERVER_URL}/interests`)
+				.get(`${process.env.REACT_APP_SERVER_URL}/interest/interests`)
 				.then((response) => {
 					axios
-						.get(`${baseUrl}/api/getuserinfo`, { withCredentials: true })
+						.get(`${baseUrl}/auth/getuserinfo`, { withCredentials: true })
 						.then((res) => {
 							setInterestsData(response.data);
 							setCourse(res.data?.course);
@@ -141,7 +141,7 @@ export default function BasicModal(props) {
 		if (placedUserInfo !== updatedUserInfo) {
 			// const baseURL = "https://pairs-server.herokuapp.com/setting";
 			axios
-				.post(`/setting`, formData, {
+				.post(`${process.env.REACT_APP_SERVER_URL}/setting/setting`, formData, {
 					headers: { "Content-Type": "multipart/form-data" },
 				})
 				.then((res) => {

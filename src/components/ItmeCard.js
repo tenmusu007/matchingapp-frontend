@@ -78,10 +78,10 @@ export default function BasicModal(props) {
 	useEffect(() => {
 		const fetchData = async () => {
 			await axios
-				.get("https://pairs-server.herokuapp.com/interests")
+				.get("https://pairs-server.herokuapp.com/interest/interests")
 				.then((response) => {
 					axios
-						.get("https://pairs-server.herokuapp.com/getuserinfo", {
+						.get("https://pairs-server.herokuapp.com/auth/getuserinfo", {
 							withCredentials: true,
 						})
 						.then((res) => {
@@ -140,7 +140,7 @@ export default function BasicModal(props) {
 		formData.append("userInfo", updatedUserInfo);
 
 		if (placedUserInfo !== updatedUserInfo) {
-			const baseURL = "https://pairs-server.herokuapp.com/setting";
+			const baseURL = "https://pairs-server.herokuapp.com/setting/setting";
 			axios
 				.post(baseURL, formData, {
 					headers: { "Content-Type": "multipart/form-data" },

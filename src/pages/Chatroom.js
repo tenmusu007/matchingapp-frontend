@@ -37,19 +37,19 @@ const Chatroom = () => {
 		const baseURL = "https://pairs-server.herokuapp.com";
 		const fetchData = async () => {
 			await axios
-				.get(`${baseURL}/getuserinfo`, { withCredentials: true })
+				.get(`${baseURL}/auth/getuserinfo`, { withCredentials: true })
 				.then((response) => {
 					setCurrentUser(response.data);
 					if (params.id !== undefined || null) {
 						setRoom(params.id);
 						socket.emit("join_room", params.id);
 						axios
-							.post(`${baseURL}/getchat`, { room_id: params.id })
+							.post(`${baseURL}/chat/getchat`, { room_id: params.id })
 							.then((res) => {
 								setList(res.data.text);
 								if (res.data.user1 === response.data._id) {
 									axios
-										.post(`${baseURL}/userimage`, {
+										.post(`${baseURL}/image/userimage`, {
 											user_id: res.data.user2,
 										})
 										.then((res) => {
@@ -57,7 +57,7 @@ const Chatroom = () => {
 										});
 								} else {
 									axios
-										.post(`${baseURL}/userimage`, {
+										.post(`${baseURL}/image/userimage`, {
 											user_id: res.data.user1,
 										})
 										.then((res) => {
@@ -87,7 +87,7 @@ const Chatroom = () => {
 			},
 			roomId: params.id,
 		});
-		axios.post("https://pairs-server.herokuapp.com/savechat", {
+		axios.post("https://pairs-server.herokuapp.com/chat/savechat", {
 			newText: {
 				msg: messageRef.current.value,
 				username: currentUser.username,

@@ -21,13 +21,13 @@ const Profile = () => {
 		const fetchData = async () => {
 			const baseURL = "https://pairs-server.herokuapp.com";
 			await axios
-				.get(`${baseURL}/getuserinfo`, { withCredentials: true })
+				.get(`${baseURL}/auth/getuserinfo`, { withCredentials: true })
         .then((response) => {
           console.log(response);
 					setUser(response.data);
 					axios
 						.post(
-							`${baseURL}/profileimage`,
+							`${baseURL}/image/profileimage`,
 							{ user_id: user?._id },
 							{ withCredentials: true }
 						)

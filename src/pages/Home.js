@@ -13,7 +13,7 @@ const Home = () => {
 	const [usersIndex, setusersIndex] = useState(0);
 	useEffect(() => {
 		const fetchMatchableUsers = async () => {
-			const baseURL = "https://pairs-server.herokuapp.com/user";
+			const baseURL = "https://pairs-server.herokuapp.com/like/user";
 			await axios.get(baseURL, { withCredentials: true }).then((res) => {
 				setUsersData(res.data);
 			});

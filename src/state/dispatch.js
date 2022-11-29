@@ -19,7 +19,7 @@ export const logoutCall = async (dispatch) => {
 export const updateCall = async (updateUser, dispatch) => {
 	try {
 		const res = await axios.put(
-			process.env.REACT_APP_SERVER_URL + `/users/${updateUser.userId}`,
+			process.env.REACT_APP_SERVER_URL + `/like/users/${updateUser.userId}`,
 			updateUser
 		);
 		await dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
