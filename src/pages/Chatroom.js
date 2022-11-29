@@ -90,7 +90,7 @@ const Chatroom = () => {
       },
       roomId: params.id,
     });
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/savechat`, {
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/savechat`, {
       newText: {
         msg: messageRef.current.value,
         username: currentUser.username,
