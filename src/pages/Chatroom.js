@@ -11,7 +11,6 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import { AuthContext } from '../AuthContext';
 
 const socket = io(process.env.REACT_APP_SERVER_URL, { query: { id: '1234' } });
 
@@ -25,7 +24,6 @@ const Chatroom = () => {
   const [text, setText] = useState('');
   const location = useLocation();
   const { matchedUserName } = location.state;
-  const { isLogin } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
