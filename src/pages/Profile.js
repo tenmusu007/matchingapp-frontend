@@ -83,7 +83,7 @@ const Profile = () => {
 								/>
 							</Grid>
 							<Grid>
-								{/* <Link
+								<Link
                   href='/login'
                   onClick={() => {
                     console.log('logout');
@@ -91,15 +91,7 @@ const Profile = () => {
                   }}
                 >
                   Logout
-                </Link> */}
-								<button
-									onClick={() => {
-										console.log("logout");
-										logoutCall(dispatch);
-									}}
-								>
-									Logout
-								</button>
+                </Link>
 							</Grid>
 						</Box>
 					</Box>
