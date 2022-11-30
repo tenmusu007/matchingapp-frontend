@@ -32,7 +32,7 @@ export const logoutCall = async (dispatch) => {
   dispatch({ type: 'LOGIN_START' });
   const logoutURL = `${process.env.REACT_APP_SERVER_URL}/auth/logout`;
   try {
-    await axios.get(logoutURL);
+    await axios.get(logoutURL, { withCredentials: true });
   } catch (err) {
     dispatch({ type: 'LOGIN_ERROR', payload: err });
   }
