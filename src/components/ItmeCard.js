@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
@@ -12,7 +12,6 @@ import Pill from './Pill';
 import Stack from '@mui/material/Stack';
 import CardActions from '@mui/material/CardActions';
 import BasicButton from './BasicButton';
-import { AuthContext } from '../AuthContext';
 import axios from 'axios';
 
 const ExpandInfo = styled((props) => {
@@ -27,7 +26,6 @@ const ExpandInfo = styled((props) => {
 }));
 
 const ItmeCard = ({ usersLength, userData, usersIndex, setusersIndex }) => {
-  const { user } = useContext(AuthContext);
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);

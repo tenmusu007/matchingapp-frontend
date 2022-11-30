@@ -87,7 +87,7 @@ export default function BasicModal(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const interestsURL = `${process.env.REACT_APP_SERVER_URL}/interests/interests`;
+      const interestsURL = `${process.env.REACT_APP_SERVER_URL}/interest/interests`;
       const res = await axios.get(interestsURL);
       setInterestsData(res.data);
       setCourse(user?.course);

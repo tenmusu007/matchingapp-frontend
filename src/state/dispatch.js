@@ -14,7 +14,7 @@ export const loginCall = async (user, dispatch) => {
 
 export const logoutCall = async (dispatch) => {
   dispatch({ type: 'LOGIN_START' });
-  const logoutURL = `${process.env.REACT_APP_SERVER_URL}/logout`;
+  const logoutURL = `${process.env.REACT_APP_SERVER_URL}/auth/logout`;
   try {
     await axios.get(logoutURL);
   } catch (err) {
