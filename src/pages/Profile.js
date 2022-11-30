@@ -48,42 +48,42 @@ const Profile = () => {
   }, []);
 
   return (
-    <>
-      <MainLayout>
-        {user && (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              maxWidth: 345,
-              mx: 'auto',
-              py: '1.3rem',
-            }}
-          >
-            <Avatar src={user.imageURL} sx={{ m: 1, width: 56, height: 56 }} />
-            <Typography variant='h1'>{user?.username}</Typography>
-            <Box>
-              <Grid>
-                <IconButton
-                  aria-label='edit'
-                  color={'primary'}
-                  size='large'
-                  onClick={handleClickOpen}
-                >
-                  <EditIcon />
-                </IconButton>
-              </Grid>
-              <Grid>
-                <BasicModal
-                  open={open}
-                  setOpen={setOpen}
-                  user={user}
-                  setUser={setUser}
-                />
-              </Grid>
-              <Grid>
-                <Link
+		<>
+			<MainLayout>
+				{user && (
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							maxWidth: 345,
+							mx: "auto",
+							py: "1.3rem",
+						}}
+					>
+						<Avatar src={user.imageURL} sx={{ m: 1, width: 56, height: 56 }} />
+						<Typography variant='h1'>{user?.username}</Typography>
+						<Box>
+							<Grid>
+								<IconButton
+									aria-label='edit'
+									color={"primary"}
+									size='large'
+									onClick={handleClickOpen}
+								>
+									<EditIcon />
+								</IconButton>
+							</Grid>
+							<Grid>
+								<BasicModal
+									open={open}
+									setOpen={setOpen}
+									user={user}
+									setUser={setUser}
+								/>
+							</Grid>
+							<Grid>
+								{/* <Link
                   href='/login'
                   onClick={() => {
                     console.log('logout');
@@ -91,14 +91,22 @@ const Profile = () => {
                   }}
                 >
                   Logout
-                </Link>
-              </Grid>
-            </Box>
-          </Box>
-        )}
-      </MainLayout>
-    </>
-  );
+                </Link> */}
+								<button
+									onClick={() => {
+										console.log("logout");
+										logoutCall(dispatch);
+									}}
+								>
+									Logout
+								</button>
+							</Grid>
+						</Box>
+					</Box>
+				)}
+			</MainLayout>
+		</>
+	);
 };
 
 export default Profile;
