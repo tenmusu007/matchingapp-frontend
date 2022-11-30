@@ -10,11 +10,19 @@ import Navbar from './components/Navbar';
 import { AuthContext } from './AuthContext';
 
 function App() {
-  const { isLogin } = useContext(AuthContext);
+  const { isLogin, isFetching } = useContext(AuthContext);
+  // console.log('sss', isFetching);
 
   return (
     <div className='App'>
       <Routes>
+        {/* <Route path='/' element={<Home />} />
+        <Route path='/chat/room=:id' element={<Chatroom />} />
+        <Route path='/chat' element={<ChatList />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} /> */}
+
         <Route path='/' element={isLogin ? <Home /> : <Login />} />
         <Route
           path='/chat/room=:id'

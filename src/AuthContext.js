@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useState, createContext, useEffect, useReducer } from 'react';
 import AuthReducer from './state/AuthReducer';
+import { checkIsLogin } from './state/dispatch';
 
 const initialState = {
-  user: null,
-  isFetching: false,
+  isLogin: false,
+  isFetching: true,
+  // isFetching: false,
   error: false,
 };
 
@@ -12,33 +14,26 @@ export const AuthContext = createContext(initialState);
 
 const AuthContextProvider = (props) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    const fetchLoggedinUser = async () => {
-      await axios
-        .get(`${process.env.REACT_APP_SERVER_URL}/auth/cookie`, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          return setIsLogin(res.data);
-        });
-    };
-    fetchLoggedinUser();
-  }, [state]);
+    checkIsLogin(dispatch);
+  }, []);
+
+  console.log(state);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user: state.user,
-        isFetching: state.isFetching,
-        error: state.error,
-        isLogin,
-        dispatch,
-      }}
-    >
-      {props.children}
-    </AuthContext.Provider>
+    <>
+      <AuthContext.Provider
+        value={{
+          isLogin: state.isLogin,
+          isFetching: state.isFetching,
+          error: state.error,
+          dispatch,
+        }}
+      >
+        {props.children}
+      </AuthContext.Provider>
+    </>
   );
 };
 
