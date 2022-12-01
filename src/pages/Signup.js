@@ -14,6 +14,7 @@ import {
   checkPassword,
   checkConfirmPassword,
 } from '../helper/AuthValidation';
+import CenterLayout from '../Layout/CenterLayout';
 
 const Auth = () => {
   const { isLogin } = useContext(AuthContext);
@@ -59,85 +60,92 @@ const Auth = () => {
   if (isLogin) return <Navigate to='/' />;
 
   return (
-    <Container component='main' maxWidth='sm' sx={{ height: '100vh' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          maxWidth: 345,
-          mx: 'auto',
-          py: '1.3rem',
-        }}
-      >
-        <Typography component='h1' variant='h5'>
-          Sign in
-        </Typography>
-        <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin='normal'
-            required
-            fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
-            autoFocus
-            error={email.input === ''}
-            helperText={email.input === '' ? email.errMessage : ''}
-            inputRef={refEmail}
-          />
-          <TextField
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            id='password'
-            autoComplete='current-password'
-            error={password.input === ''}
-            helperText={password.input === '' ? password.errMessage : ''}
-            inputRef={refPassword}
-          />
-          <TextField
-            margin='normal'
-            required
-            fullWidth
-            name='confirmPassword'
-            label='Confirm Password'
-            type='password'
-            id='confirmPassword'
-            autoComplete='current-password'
-            error={confirmPassword.input === ''}
-            helperText={
-              confirmPassword.input === '' ? confirmPassword.errMessage : ''
-            }
-            inputRef={refConfrimPassword}
-          />
-
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            sx={{ mt: 3, mb: 2 }}
+    <Container>
+      <CenterLayout>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            maxWidth: 345,
+            mx: 'auto',
+            py: '1.3rem',
+          }}
+        >
+          <Typography component='h1' variant='h5'>
+            Sign in
+          </Typography>
+          <Box
+            component='form'
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
           >
-            Sign up
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href='#' variant='body2'>
-                Forgot password?
-              </Link>
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              id='email'
+              label='Email Address'
+              name='email'
+              autoComplete='email'
+              autoFocus
+              error={email.input === ''}
+              helperText={email.input === '' ? email.errMessage : ''}
+              inputRef={refEmail}
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              name='password'
+              label='Password'
+              type='password'
+              id='password'
+              autoComplete='current-password'
+              error={password.input === ''}
+              helperText={password.input === '' ? password.errMessage : ''}
+              inputRef={refPassword}
+            />
+            <TextField
+              margin='normal'
+              required
+              fullWidth
+              name='confirmPassword'
+              label='Confirm Password'
+              type='password'
+              id='confirmPassword'
+              autoComplete='current-password'
+              error={confirmPassword.input === ''}
+              helperText={
+                confirmPassword.input === '' ? confirmPassword.errMessage : ''
+              }
+              inputRef={refConfrimPassword}
+            />
+
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign up
+            </Button>
+            <Grid container>
+              <Grid item xs sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Link href='#' variant='body2'>
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item xs sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Link component={RouterLink} to='/login' variant='body2'>
+                  Login
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Link component={RouterLink} to='/login' variant='body2'>
-                Login
-              </Link>
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
+      </CenterLayout>
     </Container>
   );
 };
