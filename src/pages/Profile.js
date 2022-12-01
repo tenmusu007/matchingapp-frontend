@@ -21,18 +21,18 @@ const Profile = () => {
     setOpen(true);
   };
 
-  const getUserImage = async (user) => {
-    const picsURL = `${process.env.REACT_APP_SERVER_URL}/image/profileimage`;
-    const res = await axios.post(
-      picsURL,
-      { user_id: user?._id },
-      { withCredentials: true }
-    );
-    if (res.data !== 'nothing') {
-      user.imageURL = res.data;
-    }
-    return user;
-  };
+  // const getUserImage = async (user) => {
+  //   const picsURL = `${process.env.REACT_APP_SERVER_URL}/image/profileimage`;
+  //   const res = await axios.post(
+  //     picsURL,
+  //     { user_id: user?._id },
+  //     { withCredentials: true }
+  //   );
+  //   if (res.data !== 'nothing') {
+  //     user.imageURL = res.data;
+  //   }
+  //   return user;
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,8 +40,8 @@ const Profile = () => {
       const res = await axios.get(getUserInfoURL, {
         withCredentials: true,
       });
-      const userWithImage = await getUserImage(res.data);
-      setUser(userWithImage);
+      // const userWithImage = await getUserImage(res.data);
+      setUser(res.data);
     };
 
     fetchData();
@@ -61,7 +61,7 @@ const Profile = () => {
 							py: "1.3rem",
 						}}
 					>
-						<Avatar src={user.imageURL} sx={{ m: 1, width: 56, height: 56 }} />
+						<Avatar src={user.image} sx={{ m: 1, width: 56, height: 56 }} />
 						<Typography variant='h1'>{user?.username}</Typography>
 						<Box>
 							<Grid>

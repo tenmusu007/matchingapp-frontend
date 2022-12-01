@@ -34,7 +34,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const ChatList = () => {
   const { user } = useContext(AuthContext);
   const [chat, setChat] = useState([]);
-  console.log("chaat",chat);
+  // console.log("chaat",chat);
   const [image, setImage] = useState('');
   useEffect(() => {
     const fetchData = async () => {
@@ -43,16 +43,8 @@ const ChatList = () => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log("user like",res.data);
+          // console.log("user like",res.data);
           setChat(res.data);
-          // axios
-          //   .post(`${process.env.REACT_APP_SERVER_URL}/image/chatlistimage`, {
-          //     user_id: res.data,
-          //   })
-          //   .then((res) => {
-          //     console.log("image",res.data);
-          //     setImage(res.data);
-          //   });
         });
     };
     fetchData().catch(console.error);
