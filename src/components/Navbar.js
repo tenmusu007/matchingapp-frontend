@@ -5,9 +5,9 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import PersonIcon from '@mui/icons-material/Person';
-import SearchIcon from '@mui/icons-material/Search';
 import Paper from '@mui/material/Paper';
 import { Link, useLocation } from 'react-router-dom';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 const Navbar = () => {
   const location = useLocation();
@@ -41,8 +41,8 @@ const Navbar = () => {
           }}
         >
           <BottomNavigationAction
-            label='Search'
-            icon={<SearchIcon />}
+            label='Match'
+            icon={<LocalFireDepartmentIcon />}
             component={Link}
             to='/'
           />

@@ -12,8 +12,8 @@ import Badge from '@mui/material/Badge';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
-    backgroundColor: '#273885',
-    color: '#273885',
+    backgroundColor: `${theme.palette.secondary.light}`,
+    color: `${theme.palette.secondary.light}`,
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
   },
   '@keyframes ripple': {
