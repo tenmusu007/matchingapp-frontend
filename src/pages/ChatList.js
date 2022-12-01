@@ -42,14 +42,16 @@ const ChatList = () => {
           withCredentials: true,
         })
         .then((res) => {
+          console.log("user like",res.data);
           setChat(res.data);
-          axios
-            .post(`${process.env.REACT_APP_SERVER_URL}/image/chatlistimage`, {
-              user_id: res.data,
-            })
-            .then((res) => {
-              setImage(res.data);
-            });
+          // axios
+          //   .post(`${process.env.REACT_APP_SERVER_URL}/image/chatlistimage`, {
+          //     user_id: res.data,
+          //   })
+          //   .then((res) => {
+          //     console.log("image",res.data);
+          //     setImage(res.data);
+          //   });
         });
     };
     fetchData().catch(console.error);
@@ -82,7 +84,7 @@ const ChatList = () => {
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                       variant={`${!value.createdChat.text.length ? 'dot' : ''}`}
                     >
-                      <Avatar alt={`Avatar n°${1}`} src={image[index]} />
+                      <Avatar alt={`Avatar n°${1}`} src={chat.userInfo.image} />
                     </StyledBadge>
                   </ListItemAvatar>
                   <ListItemText
