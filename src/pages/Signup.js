@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../state/AuthContext';
 import { Link as RouterLink, useNavigate, Navigate } from 'react-router-dom';
 import {
   checkEmail,
@@ -52,7 +52,6 @@ const Auth = () => {
       };
 
       axios.post(baseURL, newUser);
-      console.log('user', newUser);
       return navigate('/login');
     }
   };

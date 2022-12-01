@@ -6,6 +6,7 @@ import axios from 'axios';
 // import NomoreUser from './NomoreUser';
 // const randomUser = pickRandomUser(users);
 import TinderCardCom from '../components/TinderCardCom';
+import Spinner from '../components/Spinner';
 
 const Home = () => {
   const [usersData, setUsersData] = useState(null);
@@ -37,7 +38,7 @@ const Home = () => {
   return (
     <>
       <MainLayout>
-        {usersData && <TinderCardCom usersData={usersData} />}
+        {usersData ? <TinderCardCom usersData={usersData} /> : <Spinner />}
       </MainLayout>
     </>
   );

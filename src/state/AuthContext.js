@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer } from 'react';
-import AuthReducer from './state/AuthReducer';
-import { checkIsLogin } from './state/dispatch';
+import AuthReducer from './AuthReducer';
+import { checkIsLogin } from './dispatch';
 
 const initialState = {
   isLogin: false,

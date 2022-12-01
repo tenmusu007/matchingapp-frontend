@@ -5,9 +5,9 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import { Routes, Route } from 'react-router-dom';
-import ChatList from './pages/ChatList';
+import Chat from './pages/Chat';
 import Navbar from './components/Navbar';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from './state/AuthContext';
 import Spinner from './components/Spinner';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -40,7 +40,7 @@ function App() {
           path='/chat'
           element={
             <ProtectedRoute isLogin={isLogin}>
-              <ChatList />
+              <Chat />
             </ProtectedRoute>
           }
         />

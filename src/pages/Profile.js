@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import BasicModal from '../components/BasicModal';
 import axios from 'axios';
 import Link from '@mui/material/Link';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../state/AuthContext';
 import { logoutCall } from '../state/dispatch';
 
 const Profile = () => {
