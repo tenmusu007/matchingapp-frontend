@@ -13,14 +13,13 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const { isLogin, isFetching } = useContext(AuthContext);
-  // console.log('app isLogin', isLogin);
-  // console.log('app isFetching', isFetching);
-
   if (!isLogin && isFetching) return <Spinner />;
 
   return (
     <div className='App'>
       <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
         <Route
           path='/'
           element={
@@ -53,10 +52,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route path='/profile' element={<Profile />} /> */}
-
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
       </Routes>
       {isLogin && <Navbar />}
     </div>

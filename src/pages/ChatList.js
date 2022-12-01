@@ -34,7 +34,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const ChatList = () => {
   const { user } = useContext(AuthContext);
   const [chat, setChat] = useState([]);
-  const [image, setImage] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
       await axios
@@ -43,13 +43,6 @@ const ChatList = () => {
         })
         .then((res) => {
           setChat(res.data);
-          axios
-            .post(`${process.env.REACT_APP_SERVER_URL}/image/chatlistimage`, {
-              user_id: res.data,
-            })
-            .then((res) => {
-              setImage(res.data);
-            });
         });
     };
     fetchData().catch(console.error);
@@ -82,7 +75,10 @@ const ChatList = () => {
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                       variant={`${!value.createdChat.text.length ? 'dot' : ''}`}
                     >
-                      <Avatar alt={`Avatar n°${1}`} src={image[index]} />
+                      <Avatar
+                        alt={`Avatar n°${1}`}
+                        src={value.userInfo.image}
+                      />
                     </StyledBadge>
                   </ListItemAvatar>
                   <ListItemText

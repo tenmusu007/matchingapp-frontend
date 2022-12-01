@@ -5,7 +5,6 @@ import { checkIsLogin } from './state/dispatch';
 const initialState = {
   isLogin: false,
   isFetching: true,
-  // isFetching: false,
   error: false,
 };
 
