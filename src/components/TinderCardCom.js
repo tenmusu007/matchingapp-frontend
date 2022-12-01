@@ -86,9 +86,9 @@ const TinderCardCom = ({ usersData }) => {
                   >
                     <ImgDiv
                       style={{
-                        backgroundImage: `url(${person?.imageURL})`,
+                        backgroundImage: `url(${person?.image})`,
                       }}
-                      bg={person?.imageURL}
+                      bg={person?.image}
                     >
                       <ImageListItemBar
                         title={`${person?.username} ${person?.age} `}

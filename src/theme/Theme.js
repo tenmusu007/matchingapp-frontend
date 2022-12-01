@@ -1,6 +1,14 @@
 import { createTheme } from '@mui/material';
 
 const Theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#273885',
+      light: '#5b62b5',
+      dark: '#001357',
+    },
+  },
   typography: {
     h1: {
       fontSize: '1.25rem',

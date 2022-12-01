@@ -21,30 +21,17 @@ const Profile = () => {
     setOpen(true);
   };
 
-  const getUserImage = async (user) => {
-    const picsURL = `${process.env.REACT_APP_SERVER_URL}/image/profileimage`;
-    const res = await axios.post(
-      picsURL,
-      { user_id: user?._id },
-      { withCredentials: true }
-    );
-    if (res.data !== 'nothing') {
-      user.imageURL = res.data;
-    }
-    return user;
-  };
-
   useEffect(() => {
-    const fetchData = async () => {
-      const getUserInfoURL = `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`;
-      const res = await axios.get(getUserInfoURL, {
+    const fetchLoggedInUser = async () => {
+      const getUserInfo = `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`;
+      const res = await axios.get(getUserInfo, {
         withCredentials: true,
       });
-      const userWithImage = await getUserImage(res.data);
-      setUser(userWithImage);
+
+      setUser(res.data);
     };
 
-    fetchData();
+    fetchLoggedInUser();
   }, []);
 
   return (
@@ -61,7 +48,7 @@ const Profile = () => {
               py: '1.3rem',
             }}
           >
-            <Avatar src={user.imageURL} sx={{ m: 1, width: 56, height: 56 }} />
+            <Avatar src={user.image} sx={{ m: 1, width: 56, height: 56 }} />
             <Typography variant='h1'>{user?.username}</Typography>
             <Box>
               <Grid>
