@@ -41,7 +41,8 @@ const Chatroom = () => {
 								room_id: params.id,
 							})
 							.then((res) => {
-								setList(res.data);
+								setList(res.data.text);
+								setImage(res.data.image);
 							});
 					}
 				});
@@ -58,11 +59,11 @@ const Chatroom = () => {
 	const handleSend = (e) => {
 		e.preventDefault();
 		socket.emit("send_msg", {
-			data: {
-				msg: messageRef.current.value,
-				username: currentUser.username,
-				user_id: currentUser.user_id,
-			},
+        data: {
+          msg: messageRef.current.value,
+          username: currentUser.username,
+          user_id: currentUser.user_id,
+        },
 			roomId: params.id,
 		});
 		axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/savechat`, {
@@ -95,7 +96,7 @@ const Chatroom = () => {
 			>
 				<Avatar
 					alt={`Avatar n°${1}`}
-					src={list.image}
+					src={image}
 					sx={{ m: 1, width: 56, height: 56 }}
 				/>
 				<Typography variant='body1'>{matchedUserName}</Typography>
@@ -103,7 +104,7 @@ const Chatroom = () => {
 			{/* Chatting area */}
 			<ChatroomLayout>
 				<Box>
-					{list.text?.map((message, index) => {
+					{list.map((message, index) => {
 						return (
 							<Grid container spacing={2} key={index}>
 								{message.username === currentUser.username ? (
@@ -134,7 +135,7 @@ const Chatroom = () => {
 									<>
 										<Grid item xs={2}>
 											{message.username !== currentUser.username ? (
-												<Avatar alt={`Avatar n°${1}`} src={list.image} />
+												<Avatar alt={`Avatar n°${1}`} src={image} />
 											) : (
 												""
 											)}
