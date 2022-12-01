@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useState, createContext, useEffect, useReducer } from 'react';
+import React, { createContext, useEffect, useReducer } from 'react';
 import AuthReducer from './state/AuthReducer';
 import { checkIsLogin } from './state/dispatch';
 
@@ -18,8 +17,6 @@ const AuthContextProvider = (props) => {
   useEffect(() => {
     checkIsLogin(dispatch);
   }, []);
-
-  console.log(state);
 
   return (
     <>

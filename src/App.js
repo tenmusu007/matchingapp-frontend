@@ -8,32 +8,57 @@ import { Routes, Route } from 'react-router-dom';
 import ChatList from './pages/ChatList';
 import Navbar from './components/Navbar';
 import { AuthContext } from './AuthContext';
+import Spinner from './components/Spinner';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const { isLogin, isFetching } = useContext(AuthContext);
-  // console.log('sss', isFetching);
+  // console.log('app isLogin', isLogin);
+  // console.log('app isFetching', isFetching);
+
+  if (!isLogin && isFetching) return <Spinner />;
 
   return (
     <div className='App'>
       <Routes>
-        {/* <Route path='/' element={<Home />} />
-        <Route path='/chat/room=:id' element={<Chatroom />} />
-        <Route path='/chat' element={<ChatList />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} /> */}
-
-        <Route path='/' element={isLogin ? <Home /> : <Login />} />
+        <Route
+          path='/'
+          element={
+            <ProtectedRoute isLogin={isLogin}>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path='/chat/room=:id'
-          element={isLogin ? <Chatroom /> : <Login />}
+          element={
+            <ProtectedRoute isLogin={isLogin}>
+              <Chatroom />
+            </ProtectedRoute>
+          }
         />
-        <Route path='/chat' element={isLogin ? <ChatList /> : <Login />} />
-        <Route path='/profile' element={isLogin ? <Profile /> : <Login />} />
-        <Route path='/login' element={isLogin ? <Profile /> : <Login />} />
-        <Route path='/signup' element={isLogin ? <Profile /> : <Signup />} />
+        <Route
+          path='/chat'
+          element={
+            <ProtectedRoute isLogin={isLogin}>
+              <ChatList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute isLogin={isLogin}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route path='/profile' element={<Profile />} /> */}
+
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
       </Routes>
-      {isLogin ? <Navbar /> : ''}
+      {isLogin && <Navbar />}
     </div>
   );
 }

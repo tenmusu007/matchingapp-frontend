@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { AuthContext } from '../AuthContext';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, Navigate } from 'react-router-dom';
 import {
   checkEmail,
   checkPassword,
@@ -16,7 +16,7 @@ import {
 } from '../helper/AuthValidation';
 
 const Auth = () => {
-  const { user } = useContext(AuthContext);
+  const { isLogin } = useContext(AuthContext);
   const [email, setEmail] = useState({ input: undefined, errMessage: '' });
   const [password, setPassword] = useState({
     input: undefined,
@@ -29,18 +29,7 @@ const Auth = () => {
   const refEmail = useRef();
   const refPassword = useRef();
   const refConfrimPassword = useRef();
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      if (!user.sexual_orientation.length === 0 || !user.gender) {
-        return navigate('/login');
-      } else {
-        return navigate('/');
-      }
-    }
-  }, [user, navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,16 +50,13 @@ const Auth = () => {
         password: refPassword.current.value,
       };
 
-      axios
-        .post(baseURL, newUser)
-        .then(() => {
-          return navigate('/login');
-        })
-        .catch((err) => {
-          console.log('ERR', err);
-        });
+      axios.post(baseURL, newUser);
+      console.log('user', newUser);
+      return navigate('/login');
     }
   };
+
+  if (isLogin) return <Navigate to='/' />;
 
   return (
     <Container component='main' maxWidth='sm' sx={{ height: '100vh' }}>
