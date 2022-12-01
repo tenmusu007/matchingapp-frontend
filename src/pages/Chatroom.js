@@ -12,16 +12,16 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 
-const socket = io(process.env.REACT_APP_SERVER_URL, { query: { id: '1234' } });
+const socket = io(process.env.REACT_APP_SERVER_URL);
 
 const Chatroom = () => {
   const params = useParams();
   const [currentUser, setCurrentUser] = useState({});
-  const [room, setRoom] = useState('');
   const [list, setList] = useState([]);
   const [image, setImage] = useState('');
-  const messageRef = useRef(null);
   const [text, setText] = useState('');
+  // const [room, setRoom] = useState('');
+  const messageRef = useRef(null);
   const location = useLocation();
   const { matchedUserName } = location.state;
 
@@ -34,7 +34,7 @@ const Chatroom = () => {
         .then((response) => {
           setCurrentUser(response.data);
           if (params.id !== undefined || null) {
-            setRoom(params.id);
+            // setRoom(params.id);
             socket.emit('join_room', params.id);
             axios
               .post(`${process.env.REACT_APP_SERVER_URL}/chat/getchat`, {
@@ -42,29 +42,7 @@ const Chatroom = () => {
               })
               .then((res) => {
                 setList(res.data.text);
-                if (res.data.user1 === response.data._id) {
-                  axios
-                    .post(
-                      `${process.env.REACT_APP_SERVER_URL}/image/userimage`,
-                      {
-                        user_id: res.data.user2,
-                      }
-                    )
-                    .then((res) => {
-                      setImage(res.data);
-                    });
-                } else {
-                  axios
-                    .post(
-                      `${process.env.REACT_APP_SERVER_URL}/image/userimage`,
-                      {
-                        user_id: res.data.user1,
-                      }
-                    )
-                    .then((res) => {
-                      setImage(res.data);
-                    });
-                }
+                setImage(res.data.image);
               });
           }
         });
@@ -74,7 +52,7 @@ const Chatroom = () => {
       setList((prev) => [...prev, data]);
     });
     socket.on('joined_room', (roomId, user) => {
-      setRoom(roomId);
+      // setRoom(roomId);
     });
   }, []);
 
@@ -156,10 +134,8 @@ const Chatroom = () => {
                 ) : (
                   <>
                     <Grid item xs={2}>
-                      {message.username !== currentUser.username ? (
+                      {message.username !== currentUser.username && (
                         <Avatar alt={`Avatar n°${1}`} src={image} />
-                      ) : (
-                        ''
                       )}
                     </Grid>
                     <Grid item xs={10}>
@@ -223,7 +199,7 @@ const Chatroom = () => {
             <Grid item xs={2}>
               <Button
                 variant='contained'
-                color='primary'
+                color='secondary'
                 disabled={text ? false : true}
                 onClick={handleSend}
               >

@@ -15,7 +15,6 @@ import FloatingButton from './FloatingButton';
 import axios from 'axios';
 
 const CardDiv = style.div`
-  backGround:red;
   display: flex;
   justify-content: center;
 `;
@@ -135,8 +134,8 @@ const TinderCardCom = ({ usersData }) => {
           </CardDiv>
         );
       })}
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-        <FloatingButton color='primary' onClick={handleExpandClick} />
+      <Box sx={{ '& > :not(style)': { top: 363, left: 270 } }}>
+        <FloatingButton color='secondary' onClick={handleExpandClick} />
       </Box>
     </>
   );

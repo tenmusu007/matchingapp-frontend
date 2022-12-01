@@ -76,19 +76,11 @@ export default function BasicModal(props) {
   const [sexualOri, setSexualOri] = useState([]);
   const [inputSexualOriVal, setInputSexualOriVal] = useState('');
 
-  // const getInterestsData = async () => {
-  //   const interestsURL = 'http://localhost:8000/interests';
-
-  //   const allInterests = await axios.get(interestsURL);
-  //   console.log(allInterests.data);
-  // };
-
-  // getInterestsData();
-
   useEffect(() => {
-    const fetchData = async () => {
-      const interestsURL = `${process.env.REACT_APP_SERVER_URL}/interest/interests`;
-      const res = await axios.get(interestsURL);
+    const fetchSelectOptionData = async () => {
+      const res = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/interest/interests`
+      );
       setInterestsData(res.data);
       setCourse(user?.course);
       setGender(user?.gender);
@@ -98,12 +90,12 @@ export default function BasicModal(props) {
       if (selectedImage) {
         setImageUrl(URL.createObjectURL(selectedImage));
       } else {
-        setImageUrl(user?.imageURL);
+        setImageUrl(user?.image);
       }
     };
 
-    fetchData();
-  }, [selectedImage]);
+    fetchSelectOptionData();
+  }, [selectedImage, user]);
 
   const compressImage = async (image) => {
     const imageFile = image;
@@ -112,8 +104,8 @@ export default function BasicModal(props) {
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     };
-    const compressedFile = await imageCompression(imageFile, options);
-    return compressedFile;
+    const compressedImage = await imageCompression(imageFile, options);
+    return compressedImage;
   };
 
   const handleCloseModal = async () => {
@@ -124,12 +116,11 @@ export default function BasicModal(props) {
       (chosenInterests) => chosenInterests
     );
 
-    const userInfo = {
+    const updatedUserInfo = {
       _id: user._id,
       email: user.email,
       username: nameRef.current.value,
-      image: user._id,
-      imageURL: imageUrl,
+      image: imageUrl,
       about: aboutRef.current.value,
       age: Number(ageRef.current.value),
       course: courseRef.current.value,
@@ -139,23 +130,21 @@ export default function BasicModal(props) {
     };
 
     const placedUserInfo = JSON.stringify(user);
-    const updatedUserInfo = JSON.stringify(userInfo);
+    const jsonUserInfo = JSON.stringify(updatedUserInfo);
 
-    if (placedUserInfo !== updatedUserInfo) {
+    if (placedUserInfo !== jsonUserInfo) {
       const formData = new FormData();
       if (selectedImage) {
         const compressedImage = await compressImage(selectedImage);
         formData.append('image', compressedImage);
       }
-      formData.append('userInfo', updatedUserInfo);
+      formData.append('userInfo', jsonUserInfo);
 
       const updateProfileURL = `${process.env.REACT_APP_SERVER_URL}/setting/setting`;
-      axios
-        // .post(updateProfileURL, userInfo)
-        .post(updateProfileURL, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-      setUser(userInfo);
+      axios.post(updateProfileURL, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      setUser(updatedUserInfo);
     }
   };
 

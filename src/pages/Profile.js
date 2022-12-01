@@ -23,10 +23,12 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchLoggedInUser = async () => {
-      const getUserInfo = `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`;
-      const res = await axios.get(getUserInfo, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`,
+        {
+          withCredentials: true,
+        }
+      );
 
       setUser(res.data);
     };
@@ -73,7 +75,6 @@ const Profile = () => {
                 <Link
                   href='/login'
                   onClick={() => {
-                    console.log('logout');
                     logoutCall(dispatch);
                   }}
                 >
