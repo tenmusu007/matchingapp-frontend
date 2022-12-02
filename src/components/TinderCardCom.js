@@ -134,7 +134,15 @@ const TinderCardCom = ({ usersData }) => {
           </CardDiv>
         );
       })}
-      <Box sx={{ '& > :not(style)': { top: 363, left: 270 } }}>
+      <Box
+        sx={{
+          '& > :not(style)': {
+            top: 363,
+            left: { xs: '70%', sm: '80%' },
+            background: 'red',
+          },
+        }}
+      >
         <FloatingButton color='secondary' onClick={handleExpandClick} />
       </Box>
     </>
