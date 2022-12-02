@@ -11,6 +11,7 @@ import axios from 'axios';
 import Link from '@mui/material/Link';
 import { AuthContext } from '../state/AuthContext';
 import { logoutCall } from '../state/dispatch';
+import Spinner from '../components/Spinner';
 
 const Profile = () => {
   const { dispatch } = useContext(AuthContext);
@@ -39,7 +40,7 @@ const Profile = () => {
   return (
     <>
       <MainLayout>
-        {user && (
+        {user ? (
           <Box
             sx={{
               display: 'flex',
@@ -83,6 +84,8 @@ const Profile = () => {
               </Grid>
             </Box>
           </Box>
+        ) : (
+          <Spinner />
         )}
       </MainLayout>
     </>
