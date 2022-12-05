@@ -24,7 +24,7 @@ const Chatroom = () => {
 	const [text, setText] = useState("");
 	const location = useLocation();
 	const { matchedUserName } = location.state;
-	console.log(list);
+	// console.log(list);
 	useEffect(() => {
 		const fetchData = async () => {
 			await axios
@@ -37,10 +37,15 @@ const Chatroom = () => {
 						setRoom(params.id);
 						socket.emit("join_room", params.id);
 						axios
-							.post(`${process.env.REACT_APP_SERVER_URL}/chat/getchat`, {
-								room_id: params.id,
-							})
+							.post(
+								`${process.env.REACT_APP_SERVER_URL}/chat/getchat`,
+								{
+									room_id: params.id,
+								},
+								{ withCredentials: true }
+							)
 							.then((res) => {
+								console.log("room", res.data);
 								setList(res.data.text);
 								setImage(res.data.image);
 							});
@@ -73,7 +78,8 @@ const Chatroom = () => {
 				user_id: currentUser.user_id,
 			},
 			room_id: params.id,
-		});
+		},
+		{});
 		setText("");
 		messageRef.current.value = "";
 	};
