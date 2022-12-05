@@ -23,19 +23,22 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const fetchLoggedInUser = async () => {
-      const res = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`,
-        {
-          withCredentials: true,
-        }
-      );
+    const timer = setTimeout(() => {
+      const fetchLoggedInUser = async () => {
+        const res = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`,
+          {
+            withCredentials: true,
+          }
+        );
+        console.log('sss');
 
-      setUser(res.data);
-    };
-
-    fetchLoggedInUser();
-  }, []);
+        setUser(res.data);
+      };
+      fetchLoggedInUser();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [open]);
 
   return (
     <>

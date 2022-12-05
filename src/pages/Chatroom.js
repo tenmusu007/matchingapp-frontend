@@ -44,6 +44,9 @@ const Chatroom = () => {
           }
         );
 
+        // console.log(loggedInUser);
+        // console.log(res.data);
+
         setLoggedInUser(loggedInUser.data);
         setMessageList(res.data.text);
         setImage(res.data.image);
@@ -70,8 +73,6 @@ const Chatroom = () => {
       // setRoom(roomId);
     });
   }, [roomParam]);
-
-  console.log('sss');
 
   const handleSend = (e) => {
     e.preventDefault();

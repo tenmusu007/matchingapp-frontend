@@ -86,16 +86,11 @@ export default function BasicModal(props) {
       setGender(user?.gender);
       setSexualOri(user?.sexual_orientation);
       setInterests(user?.interests);
-
-      if (selectedImage) {
-        setImageUrl(URL.createObjectURL(selectedImage));
-      } else {
-        setImageUrl(user?.image);
-      }
+      setImageUrl(user?.image);
     };
 
     fetchSelectOptionData();
-  }, [selectedImage, user]);
+  }, [user]);
 
   const compressImage = async (image) => {
     const imageFile = image;
@@ -182,7 +177,15 @@ export default function BasicModal(props) {
             </Button>
             {imageUrl && (
               <Box mt={2} textAlign='center'>
-                <img src={imageUrl} alt={user.username} height='100px' />
+                <img
+                  src={
+                    selectedImage
+                      ? URL.createObjectURL(selectedImage)
+                      : imageUrl
+                  }
+                  alt={user.username}
+                  height='100px'
+                />
               </Box>
             )}
           </BoxLayout>
