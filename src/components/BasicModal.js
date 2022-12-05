@@ -95,7 +95,7 @@ export default function BasicModal(props) {
   const compressImage = async (image) => {
     const imageFile = image;
     const options = {
-      maxSizeMB: 1,
+      maxSizeMB: 0.5,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     };

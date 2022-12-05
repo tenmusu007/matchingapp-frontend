@@ -31,12 +31,11 @@ const Profile = () => {
             withCredentials: true,
           }
         );
-        console.log('sss');
 
         setUser(res.data);
       };
       fetchLoggedInUser();
-    }, 1000);
+    }, 800);
     return () => clearTimeout(timer);
   }, [open]);
 
