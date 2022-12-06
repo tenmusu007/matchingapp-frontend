@@ -54,7 +54,6 @@ const ChatList = ({ chat, deleteChat }) => {
           {chat.map((value, index) => {
             return (
               <div key={value.createdChat._id}>
-                <Divider variant='inset' component='li' />
                 <ListItem disablePadding>
                   <ListItemButton
                     component={Link}
