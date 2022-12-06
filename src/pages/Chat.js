@@ -20,8 +20,25 @@ const Chat = () => {
     fetchMatchedUsers();
   }, []);
 
+  const deleteChat = (e) => {
+    console.log('hey', e);
+    const chatInfo = {
+      chatId: chat[e].createdChat._id,
+    };
+    console.log('hey', chatInfo);
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/chat/deletechat`, chatInfo, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   return (
-    <MainLayout>{chat ? <ChatList chat={chat} /> : <Spinner />}</MainLayout>
+    <MainLayout>
+      {chat ? <ChatList chat={chat} deleteChat={deleteChat} /> : <Spinner />}
+    </MainLayout>
   );
 };
 

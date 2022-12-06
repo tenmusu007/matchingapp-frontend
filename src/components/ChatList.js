@@ -9,6 +9,8 @@ import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
+import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -28,7 +30,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const ChatList = ({ chat }) => {
+const ChatList = ({ chat, deleteChat }) => {
   return (
     <List
       dense
@@ -39,7 +41,7 @@ const ChatList = ({ chat }) => {
         bgcolor: 'background.paper',
       }}
     >
-      {chat.map((value) => {
+      {chat.map((value, index) => {
         return (
           <div key={value.createdChat._id}>
             <Divider variant='inset' component='li' />
@@ -69,6 +71,9 @@ const ChatList = ({ chat }) => {
                   }
                 />
               </ListItemButton>
+              <Button color='secondary' onClick={() => deleteChat(index)}>
+                <CloseIcon />
+              </Button>
             </ListItem>
           </div>
         );

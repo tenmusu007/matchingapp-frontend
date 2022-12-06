@@ -20,7 +20,6 @@ const Chatroom = () => {
   const [messageList, setMessageList] = useState(null);
   const [image, setImage] = useState('');
   const [text, setText] = useState('');
-  // const [roomParam, setRoom] = useState('');
   const messageRef = useRef(null);
   const location = useLocation();
   const { matchedUserName } = location.state;
@@ -35,43 +34,26 @@ const Chatroom = () => {
       );
 
       if (roomParam.id) {
-        // setRoom(roomParam.id);
         socket.emit('join_room', roomParam.id);
         const res = await axios.post(
           `${process.env.REACT_APP_SERVER_URL}/chat/getchat`,
           {
             room_id: roomParam.id,
-          }
+          },
+          { withCredentials: true }
         );
-
-        // console.log(loggedInUser);
-        // console.log(res.data);
 
         setLoggedInUser(loggedInUser.data);
         setMessageList(res.data.text);
         setImage(res.data.image);
       }
-      // if (roomParam.id !== undefined || null) {
-      //   // setRoom(roomParam.id);
-      //   socket.emit('join_room', roomParam.id);
-      //   axios
-      //     .post(`${process.env.REACT_APP_SERVER_URL}/chat/getchat`, {
-      //       room_id: roomParam.id,
-      //     })
-      //     .then((res) => {
-      //       setMessageList(res.data.text);
-      //       setImage(res.data.image);
-      //     });
-      // }
     };
     fetchChatHistory();
 
     socket.on('recived_msg', (data) => {
       setMessageList((prev) => [...prev, data]);
     });
-    socket.on('joined_room', (roomId, user) => {
-      // setRoom(roomId);
-    });
+    socket.on('joined_room', (roomId, user) => {});
   }, [roomParam]);
 
   const handleSend = (e) => {
