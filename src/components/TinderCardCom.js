@@ -13,6 +13,7 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Box from '@mui/material/Box';
 import FloatingButton from './FloatingButton';
 import axios from 'axios';
+import noMoreSvg from '../image/userImages/Search.svg';
 
 const CardDiv = style.div`
   display: flex;
@@ -32,6 +33,7 @@ const ImgDiv = style.div`
 
 const TinderCardCom = ({ usersData }) => {
   const [expanded, setExpanded] = useState(false);
+  const [userNum, setUserNum] = useState(0);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -48,9 +50,12 @@ const TinderCardCom = ({ usersData }) => {
             withCredentials: true,
           }
         );
+        setUserNum(userNum + 1);
+
         return;
 
       case 'left':
+        setUserNum(userNum + 1);
         return;
 
       default:
@@ -58,93 +63,141 @@ const TinderCardCom = ({ usersData }) => {
     }
   };
 
+  if (userNum === usersData.length) {
+    console.log('sssss');
+  }
+
   return (
     <>
-      {usersData?.map((person) => {
-        return (
-          <CardDiv key={person._id}>
-            <TinderCard
-              className='swipe'
-              onSwipe={(dir) => swiped(dir, person._id)}
-              preventSwipe={['up', 'down']}
+      {userNum === usersData.length ? (
+        <>
+          <CardDiv>
+            <Card
+              sx={{
+                maxWidth: 345,
+                minHeight: expanded && 700,
+                mx: 'auto',
+                my: '1.3rem',
+              }}
             >
-              <Card
-                sx={{
-                  maxWidth: 345,
-                  minHeight: expanded && 700,
-                  mx: 'auto',
-                  my: '1.3rem',
-                }}
-              >
-                <>
-                  <ImageListItem
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
+              <>
+                <ImageListItem
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <ImgDiv
+                    style={{
+                      backgroundImage: `url(${noMoreSvg})`,
                     }}
+                    bg={noMoreSvg}
                   >
-                    <ImgDiv
-                      style={{
-                        backgroundImage: `url(${person?.image})`,
-                      }}
-                      bg={person?.image}
-                    >
-                      <ImageListItemBar
-                        title={`${person?.username} ${person?.age} `}
-                        subtitle={person?.course}
-                      />
-                    </ImgDiv>
-                  </ImageListItem>
+                    <ImageListItemBar title={'Oops.. No more users!'} />
+                  </ImgDiv>
+                </ImageListItem>
 
-                  <CardContent
+                <CardContent
+                  sx={{
+                    minWidth: 345,
+                    mx: 'auto',
+                  }}
+                ></CardContent>
+              </>
+            </Card>
+          </CardDiv>
+        </>
+      ) : (
+        <>
+          {usersData?.map((person) => {
+            return (
+              <CardDiv key={person._id}>
+                <TinderCard
+                  className='swipe'
+                  onSwipe={(dir) => swiped(dir, person._id)}
+                  preventSwipe={['up', 'down']}
+                  swipeRequirementType={'position'}
+                  swipeThreshold={180}
+                >
+                  <Card
                     sx={{
-                      minWidth: 345,
+                      maxWidth: 345,
+                      minHeight: expanded && 700,
                       mx: 'auto',
+                      my: '1.3rem',
                     }}
                   >
-                    <Collapse in={expanded} timeout='auto' unmountOnExit>
-                      <Typography variant='h1'>About me</Typography>
-                      <Typography
-                        variant='body1'
+                    <>
+                      <ImageListItem
                         sx={{
-                          mx: 'auto',
-                          py: 1,
+                          display: 'flex',
+                          justifyContent: 'center',
                         }}
                       >
-                        {person?.about}
-                      </Typography>
-                      <Typography variant='h1'>My Interests</Typography>
-                      <Stack
-                        direction='row'
-                        spacing={1}
-                        flexWrap={'wrap'}
-                        sx={{ mx: 'auto', py: 1 }}
+                        <ImgDiv
+                          style={{
+                            backgroundImage: `url(${person?.image})`,
+                          }}
+                          bg={person?.image}
+                        >
+                          <ImageListItemBar
+                            title={`${person?.username} ${person?.age} `}
+                            subtitle={person?.course}
+                          />
+                        </ImgDiv>
+                      </ImageListItem>
+
+                      <CardContent
+                        sx={{
+                          minWidth: 345,
+                          mx: 'auto',
+                        }}
                       >
-                        {person?.interests?.map((interest, index) => {
-                          return (
-                            <Pill text={interest.hobby} key={interest.id} />
-                          );
-                        })}
-                      </Stack>
-                    </Collapse>
-                  </CardContent>
-                </>
-              </Card>
-            </TinderCard>
-          </CardDiv>
-        );
-      })}
-      <Box
-        sx={{
-          '& > :not(style)': {
-            top: 363,
-            left: { xs: '70%', sm: '80%' },
-            background: 'red',
-          },
-        }}
-      >
-        <FloatingButton color='secondary' onClick={handleExpandClick} />
-      </Box>
+                        <Collapse in={expanded} timeout='auto' unmountOnExit>
+                          <Typography variant='h1'>About me</Typography>
+                          <Typography
+                            variant='body1'
+                            sx={{
+                              mx: 'auto',
+                              py: 1,
+                            }}
+                          >
+                            {person?.about}
+                          </Typography>
+                          <Typography variant='h1'>My Interests</Typography>
+                          <Stack
+                            direction='row'
+                            spacing={1}
+                            flexWrap={'wrap'}
+                            sx={{ mx: 'auto', py: 1 }}
+                          >
+                            {person?.interests?.map((interest, index) => {
+                              return (
+                                <Pill text={interest.hobby} key={interest.id} />
+                              );
+                            })}
+                          </Stack>
+                        </Collapse>
+                      </CardContent>
+                    </>
+                  </Card>
+                </TinderCard>
+              </CardDiv>
+            );
+          })}
+          <Box
+            sx={{
+              '& > :not(style)': {
+                top: 363,
+                left: { xs: '70%', sm: '80%' },
+                background: 'red',
+              },
+            }}
+          >
+            <FloatingButton color='secondary' onClick={handleExpandClick} />
+          </Box>
+        </>
+      )}
     </>
   );
 };
