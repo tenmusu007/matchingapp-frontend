@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import style from 'styled-components';
 import '../styles/style.css';
@@ -35,6 +35,12 @@ const ImgDiv = style.div`
 const TinderCardCom = ({ usersData }) => {
   const [expanded, setExpanded] = useState(false);
   const [nomore, setNomore] = useState(false);
+
+  useEffect(() => {
+    if (usersData.length === 0) {
+      setNomore(true);
+    }
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
