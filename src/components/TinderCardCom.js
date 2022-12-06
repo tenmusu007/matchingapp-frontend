@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import FloatingButton from './FloatingButton';
 import axios from 'axios';
 import noMoreSvg from '../image/userImages/Search.svg';
+import CenterLayout from '../Layout/CenterLayout';
 
 const CardDiv = style.div`
   display: flex;
@@ -63,49 +64,14 @@ const TinderCardCom = ({ usersData }) => {
     }
   };
 
-  if (userNum === usersData.length) {
-    console.log('sssss');
-  }
-
   return (
     <>
       {userNum === usersData.length ? (
         <>
-          <CardDiv>
-            <Card
-              sx={{
-                maxWidth: 345,
-                minHeight: expanded && 700,
-                mx: 'auto',
-                my: '1.3rem',
-              }}
-            >
-              <>
-                <ImageListItem
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <ImgDiv
-                    style={{
-                      backgroundImage: `url(${noMoreSvg})`,
-                    }}
-                    bg={noMoreSvg}
-                  >
-                    <ImageListItemBar title={'Oops.. No more users!'} />
-                  </ImgDiv>
-                </ImageListItem>
-
-                <CardContent
-                  sx={{
-                    minWidth: 345,
-                    mx: 'auto',
-                  }}
-                ></CardContent>
-              </>
-            </Card>
-          </CardDiv>
+          <CenterLayout>
+            <img src={noMoreSvg} alt={noMoreSvg} width={300} />
+            <Typography variant='h1'>Oops... No more users!</Typography>
+          </CenterLayout>
         </>
       ) : (
         <>
