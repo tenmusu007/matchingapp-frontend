@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TinderCard from 'react-tinder-card';
 import style from 'styled-components';
 import '../styles/style.css';
@@ -34,7 +34,7 @@ const ImgDiv = style.div`
 
 const TinderCardCom = ({ usersData }) => {
   const [expanded, setExpanded] = useState(false);
-  const [userNum, setUserNum] = useState(0);
+  const [nomore, setNomore] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -43,7 +43,6 @@ const TinderCardCom = ({ usersData }) => {
   const swiped = (direction, userId) => {
     switch (direction) {
       case 'right':
-        console.log(direction, userId);
         const sendInfo = { to: userId };
         axios.post(
           `${process.env.REACT_APP_SERVER_URL}/like/sendlike`,
@@ -52,11 +51,17 @@ const TinderCardCom = ({ usersData }) => {
             withCredentials: true,
           }
         );
-        // setUserNum(userNum + 1);
+        usersData.pop();
+        if (usersData.length === 0) {
+          setNomore(true);
+        }
         return;
 
       case 'left':
-        // setUserNum(userNum + 1);
+        usersData.pop();
+        if (usersData.length === 0) {
+          setNomore(true);
+        }
         return;
 
       default:
@@ -66,7 +71,7 @@ const TinderCardCom = ({ usersData }) => {
 
   return (
     <>
-      {userNum === usersData.length ? (
+      {nomore === true ? (
         <>
           <CenterLayout>
             <img src={noMoreSvg} alt={noMoreSvg} width={300} />
