@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TinderCard from 'react-tinder-card';
 import style from 'styled-components';
 import '../styles/style.css';
