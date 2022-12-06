@@ -43,6 +43,7 @@ const TinderCardCom = ({ usersData }) => {
   const swiped = (direction, userId) => {
     switch (direction) {
       case 'right':
+        console.log(direction, userId);
         const sendInfo = { to: userId };
         axios.post(
           `${process.env.REACT_APP_SERVER_URL}/like/sendlike`,
@@ -51,12 +52,11 @@ const TinderCardCom = ({ usersData }) => {
             withCredentials: true,
           }
         );
-        setUserNum(userNum + 1);
-
+        // setUserNum(userNum + 1);
         return;
 
       case 'left':
-        setUserNum(userNum + 1);
+        // setUserNum(userNum + 1);
         return;
 
       default:
