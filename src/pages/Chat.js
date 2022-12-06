@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner';
 
 const Chat = () => {
   const [chat, setChat] = useState();
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchMatchedUsers = async () => {
@@ -16,23 +17,24 @@ const Chat = () => {
         }
       );
       setChat(res.data);
+      if (reload) setReload(false);
     };
     fetchMatchedUsers();
-  }, []);
+  }, [reload]);
 
   const deleteChat = (e) => {
-    console.log('hey', e);
     const chatInfo = {
       chatId: chat[e].createdChat._id,
     };
-    console.log('hey', chatInfo);
-    axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/chat/deletechat`, chatInfo, {
+    const res = axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/chat/deletechat`,
+      chatInfo,
+      {
         withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res);
-      });
+      }
+    );
+    setReload(true);
+    return res;
   };
 
   return (
