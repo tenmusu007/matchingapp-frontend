@@ -175,7 +175,7 @@ export default function BasicModal(props) {
                 onChange={(e) => setSelectedImage(e.target.files[0])}
               />
             </Button>
-            {imageUrl && (
+            {(imageUrl || selectedImage) && (
               <Box mt={2} textAlign='center'>
                 <img
                   src={
