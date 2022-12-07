@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
@@ -28,7 +27,6 @@ const Navbar = () => {
 
   return (
     <Box sx={{ pb: 7 }}>
-      <CssBaseline />
       <Paper
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         elevation={3}
