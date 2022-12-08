@@ -12,12 +12,14 @@ import Link from '@mui/material/Link';
 import { AuthContext } from '../state/AuthContext';
 import { logoutCall } from '../state/dispatch';
 import Spinner from '../components/Spinner';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const Profile = () => {
   const { dispatch } = useContext(AuthContext);
   const [user, setUser] = useState(null);
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -56,7 +58,13 @@ const Profile = () => {
             <Avatar src={user.image} sx={{ m: 1, width: 56, height: 56 }} />
             <Typography variant='h1'>{user?.username}</Typography>
             <Box>
-              <Grid>
+              <Grid
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
                 <IconButton
                   aria-label='edit'
                   color={'primary'}
@@ -75,14 +83,27 @@ const Profile = () => {
                 />
               </Grid>
               <Grid>
-                <Link
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  sx={{
+                    textTransform: 'none',
+                  }}
+                  onClick={() => {
+                    logoutCall(dispatch);
+                    navigate('/login');
+                  }}
+                >
+                  Logout
+                </Button>
+                {/* <Link
                   href='/login'
                   onClick={() => {
                     logoutCall(dispatch);
                   }}
                 >
                   Logout
-                </Link>
+                </Link> */}
               </Grid>
             </Box>
           </Box>
