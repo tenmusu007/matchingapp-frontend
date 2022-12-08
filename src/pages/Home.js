@@ -4,6 +4,7 @@ import MainLayout from '../Layout/MainLayout';
 import axios from 'axios';
 import TinderCardCom from '../components/TinderCardCom';
 import Spinner from '../components/Spinner';
+import { SnackbarProvider } from 'notistack';
 
 const Home = () => {
   const [usersData, setUsersData] = useState(null);
@@ -21,9 +22,22 @@ const Home = () => {
 
   return (
     <>
-      <MainLayout>
-        {usersData ? <TinderCardCom usersData={usersData} /> : <Spinner />}
-      </MainLayout>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        sx={{
+          '& .SnackbarContent-root': {
+            bgcolor: 'secondary.light',
+          },
+        }}
+      >
+        <MainLayout>
+          {usersData ? <TinderCardCom usersData={usersData} /> : <Spinner />}
+        </MainLayout>
+      </SnackbarProvider>
     </>
   );
 };

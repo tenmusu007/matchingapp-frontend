@@ -10,11 +10,10 @@ import CardContent from '@mui/material/CardContent';
 import Pill from './Pill';
 import Stack from '@mui/material/Stack';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import Box from '@mui/material/Box';
-import FloatingButton from './FloatingButton';
 import axios from 'axios';
 import noMoreSvg from '../image/userImages/Search.svg';
 import CenterLayout from '../Layout/CenterLayout';
+import { useSnackbar } from 'notistack';
 
 const CardDiv = style.div`
   display: flex;
@@ -33,8 +32,8 @@ const ImgDiv = style.div`
 `;
 
 const TinderCardCom = ({ usersData }) => {
-  const [expanded, setExpanded] = useState(false);
   const [nomore, setNomore] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (usersData.length === 0) {
@@ -42,21 +41,21 @@ const TinderCardCom = ({ usersData }) => {
     }
   }, []);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  const swiped = (direction, userId) => {
+  const swiped = async (direction, userId) => {
     switch (direction) {
       case 'right':
         const sendInfo = { to: userId };
-        axios.post(
+        const res = await axios.post(
           `${process.env.REACT_APP_SERVER_URL}/like/sendlike`,
           sendInfo,
           {
             withCredentials: true,
           }
         );
+
+        if (res.data.matched)
+          enqueueSnackbar(`Matched with ${res.data.username} 👏`);
+
         usersData.pop();
         if (usersData.length === 0) {
           setNomore(true);
@@ -68,6 +67,7 @@ const TinderCardCom = ({ usersData }) => {
         if (usersData.length === 0) {
           setNomore(true);
         }
+
         return;
 
       default:
@@ -99,7 +99,7 @@ const TinderCardCom = ({ usersData }) => {
                   <Card
                     sx={{
                       maxWidth: 345,
-                      minHeight: expanded && 700,
+                      minHeight: 700,
                       mx: 'auto',
                       my: '1.3rem',
                     }}
@@ -130,7 +130,7 @@ const TinderCardCom = ({ usersData }) => {
                           mx: 'auto',
                         }}
                       >
-                        <Collapse in={expanded} timeout='auto' unmountOnExit>
+                        <Collapse in={true} timeout='auto' unmountOnExit>
                           <Typography variant='h1'>About me</Typography>
                           <Typography
                             variant='body1'
@@ -148,7 +148,7 @@ const TinderCardCom = ({ usersData }) => {
                             flexWrap={'wrap'}
                             sx={{ mx: 'auto', py: 1 }}
                           >
-                            {person?.interests?.map((interest, index) => {
+                            {person?.interests?.map((interest) => {
                               return (
                                 <Pill text={interest.hobby} key={interest.id} />
                               );
@@ -162,17 +162,6 @@ const TinderCardCom = ({ usersData }) => {
               </CardDiv>
             );
           })}
-          <Box
-            sx={{
-              '& > :not(style)': {
-                top: 363,
-                left: { xs: '70%', sm: '80%' },
-                background: 'red',
-              },
-            }}
-          >
-            <FloatingButton color='secondary' onClick={handleExpandClick} />
-          </Box>
         </>
       )}
     </>
