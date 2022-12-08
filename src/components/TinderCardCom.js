@@ -52,8 +52,9 @@ const TinderCardCom = ({ usersData }) => {
           }
         );
 
-        if (res.data.matched)
+        if (res.data.matched) {
           enqueueSnackbar(`Matched with ${res.data.username} 👏`);
+        }
 
         usersData.pop();
         if (usersData.length === 0) {
