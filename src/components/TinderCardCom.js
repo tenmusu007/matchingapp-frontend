@@ -151,7 +151,7 @@ const TinderCardCom = ({ usersData }) => {
                         >
                           {person?.interests?.map((interest) => {
                             return (
-                              <Pill text={interest.hobby} key={interest.id} />
+                              <Pill text={interest.hobby} key={interest._id} />
                             );
                           })}
                         </Stack>

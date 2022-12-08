@@ -244,7 +244,7 @@ export default function BasicModal(props) {
               options={interestsData}
               getOptionLabel={(option) => option.hobby}
               value={interests}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
+              isOptionEqualToValue={(option, value) => option._id === value._id}
               defaultValue={user?.interests}
               onChange={(event, newValue) => {
                 setInterests(newValue);

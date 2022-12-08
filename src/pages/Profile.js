@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import BasicModal from '../components/BasicModal';
 import axios from 'axios';
-import Link from '@mui/material/Link';
 import { AuthContext } from '../state/AuthContext';
 import { logoutCall } from '../state/dispatch';
 import Spinner from '../components/Spinner';
@@ -96,14 +95,6 @@ const Profile = () => {
                 >
                   Logout
                 </Button>
-                {/* <Link
-                  href='/login'
-                  onClick={() => {
-                    logoutCall(dispatch);
-                  }}
-                >
-                  Logout
-                </Link> */}
               </Grid>
             </Box>
           </Box>
