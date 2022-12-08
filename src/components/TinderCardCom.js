@@ -3,7 +3,6 @@ import TinderCard from 'react-tinder-card';
 import style from 'styled-components';
 import '../styles/style.css';
 import ImageListItem from '@mui/material/ImageListItem';
-import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -39,7 +38,7 @@ const TinderCardCom = ({ usersData }) => {
     if (usersData.length === 0) {
       setNomore(true);
     }
-  }, []);
+  }, [usersData]);
 
   const swiped = async (direction, userId) => {
     switch (direction) {
@@ -105,6 +104,7 @@ const TinderCardCom = ({ usersData }) => {
                     }}
                   >
                     <>
+                      {/* image pic */}
                       <ImageListItem
                         sx={{
                           display: 'flex',
@@ -124,37 +124,36 @@ const TinderCardCom = ({ usersData }) => {
                         </ImgDiv>
                       </ImageListItem>
 
+                      {/* user detail  */}
                       <CardContent
                         sx={{
                           minWidth: 345,
                           mx: 'auto',
                         }}
                       >
-                        <Collapse in={true} timeout='auto' unmountOnExit>
-                          <Typography variant='h1'>About me</Typography>
-                          <Typography
-                            variant='body1'
-                            sx={{
-                              mx: 'auto',
-                              py: 1,
-                            }}
-                          >
-                            {person?.about}
-                          </Typography>
-                          <Typography variant='h1'>My Interests</Typography>
-                          <Stack
-                            direction='row'
-                            spacing={1}
-                            flexWrap={'wrap'}
-                            sx={{ mx: 'auto', py: 1 }}
-                          >
-                            {person?.interests?.map((interest) => {
-                              return (
-                                <Pill text={interest.hobby} key={interest.id} />
-                              );
-                            })}
-                          </Stack>
-                        </Collapse>
+                        <Typography variant='h1'>About me</Typography>
+                        <Typography
+                          variant='body1'
+                          sx={{
+                            mx: 'auto',
+                            py: 1,
+                          }}
+                        >
+                          {person?.about}
+                        </Typography>
+                        <Typography variant='h1'>My Interests</Typography>
+                        <Stack
+                          direction='row'
+                          spacing={1}
+                          flexWrap={'wrap'}
+                          sx={{ mx: 'auto', py: 1 }}
+                        >
+                          {person?.interests?.map((interest) => {
+                            return (
+                              <Pill text={interest.hobby} key={interest.id} />
+                            );
+                          })}
+                        </Stack>
                       </CardContent>
                     </>
                   </Card>
