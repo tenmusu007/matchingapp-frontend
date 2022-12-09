@@ -13,6 +13,11 @@ const Theme = createTheme({
       light: '#ff5e53',
       dark: '#ac0000',
     },
+    accent: {
+      main: '#4caf50',
+      light: '#80e27e',
+      dark: '#087f23',
+    },
   },
   typography: {
     h1: {

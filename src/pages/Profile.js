@@ -3,7 +3,6 @@ import MainLayout from '../Layout/MainLayout';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import BasicModal from '../components/BasicModal';
@@ -13,6 +12,7 @@ import { logoutCall } from '../state/dispatch';
 import Spinner from '../components/Spinner';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { SnackbarProvider } from 'notistack';
 
 const Profile = () => {
   const { dispatch } = useContext(AuthContext);
@@ -24,46 +24,54 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const fetchLoggedInUser = async () => {
-        const res = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`,
-          {
-            withCredentials: true,
-          }
-        );
+    const fetchLoggedInUser = async () => {
+      const res = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/auth/getuserinfo`,
+        {
+          withCredentials: true,
+        }
+      );
 
-        setUser(res.data);
-      };
-      fetchLoggedInUser();
-    }, 800);
-    return () => clearTimeout(timer);
+      setUser(res.data);
+    };
+    fetchLoggedInUser();
   }, [open]);
 
   return (
     <>
-      <MainLayout>
-        {user ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              maxWidth: 345,
-              mx: 'auto',
-              py: '1.3rem',
-            }}
-          >
-            <Avatar src={user.image} sx={{ m: 1, width: 56, height: 56 }} />
-            <Typography variant='h1'>{user?.username}</Typography>
-            <Box>
-              <Grid
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        sx={{
+          '& .SnackbarContent-root': {
+            bgcolor: 'accent.main',
+          },
+        }}
+      >
+        <MainLayout>
+          {user ? (
+            <Grid
+              container
+              rowSpacing={3}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                maxWidth: 345,
+                mx: 'auto',
+                my: '1.3rem',
+              }}
+            >
+              <Grid item xs={12}>
+                <Avatar src={user.image} sx={{ m: 1, width: 56, height: 56 }} />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant='h1'>{user?.username}</Typography>
+              </Grid>
+              <Grid item xs={12}>
                 <IconButton
                   aria-label='edit'
                   color={'primary'}
@@ -72,8 +80,6 @@ const Profile = () => {
                 >
                   <EditIcon />
                 </IconButton>
-              </Grid>
-              <Grid>
                 <BasicModal
                   open={open}
                   setOpen={setOpen}
@@ -81,7 +87,7 @@ const Profile = () => {
                   setUser={setUser}
                 />
               </Grid>
-              <Grid>
+              <Grid item xs={12}>
                 <Button
                   variant='contained'
                   color='secondary'
@@ -96,12 +102,12 @@ const Profile = () => {
                   Logout
                 </Button>
               </Grid>
-            </Box>
-          </Box>
-        ) : (
-          <Spinner />
-        )}
-      </MainLayout>
+            </Grid>
+          ) : (
+            <Spinner />
+          )}
+        </MainLayout>
+      </SnackbarProvider>
     </>
   );
 };

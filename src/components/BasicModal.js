@@ -16,6 +16,7 @@ import BoxLayout from '../Layout/BoxLayout';
 import axios from 'axios';
 import { courses, genders, sexualOrientations } from '../Data/SelectBoxOptions';
 import imageCompression from 'browser-image-compression';
+import { useSnackbar } from 'notistack';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -60,6 +61,7 @@ export default function BasicModal(props) {
   const courseRef = useRef(null);
   const genderRef = useRef(null);
   const ageRef = useRef(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   // image
   const [selectedImage, setSelectedImage] = useState(null);
@@ -103,6 +105,10 @@ export default function BasicModal(props) {
     return compressedImage;
   };
 
+  const convertToJson = (object) => {
+    return JSON.stringify(object);
+  };
+
   const handleCloseModal = async () => {
     setOpen(false);
 
@@ -115,31 +121,41 @@ export default function BasicModal(props) {
       _id: user._id,
       email: user.email,
       username: nameRef.current.value,
-      image: imageUrl,
-      about: aboutRef.current.value,
-      age: Number(ageRef.current.value),
       course: courseRef.current.value,
+      sexual_orientation: updatedSexualOri,
+      age: Number(ageRef.current.value),
+      about: aboutRef.current.value,
       gender: genderRef.current.value,
       interests: UpdatedInterests,
-      sexual_orientation: updatedSexualOri,
+      image: imageUrl,
     };
 
-    const placedUserInfo = JSON.stringify(user);
-    const jsonUserInfo = JSON.stringify(updatedUserInfo);
-
-    if (placedUserInfo !== jsonUserInfo) {
+    if (
+      updatedUserInfo.username !== user.username ||
+      updatedUserInfo.course !== user.course ||
+      convertToJson(updatedUserInfo.sexual_orientation) !==
+        convertToJson(user.sexual_orientation) ||
+      updatedUserInfo.age !== user.age ||
+      updatedUserInfo.about !== user.about ||
+      updatedUserInfo.gender !== user.gender ||
+      convertToJson(updatedUserInfo.interests) !==
+        convertToJson(user.interests) ||
+      selectedImage !== null
+    ) {
       const formData = new FormData();
       if (selectedImage) {
         const compressedImage = await compressImage(selectedImage);
         formData.append('image', compressedImage);
       }
-      formData.append('userInfo', jsonUserInfo);
 
+      formData.append('userInfo', convertToJson(updatedUserInfo));
       const updateProfileURL = `${process.env.REACT_APP_SERVER_URL}/setting/setting`;
-      axios.post(updateProfileURL, formData, {
+      const res = await axios.post(updateProfileURL, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-      setUser(updatedUserInfo);
+      enqueueSnackbar(`User info is updated!`);
+      setUser(res.data);
+      setSelectedImage(null);
     }
   };
 

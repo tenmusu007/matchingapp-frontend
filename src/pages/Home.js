@@ -30,7 +30,7 @@ const Home = () => {
         }}
         sx={{
           '& .SnackbarContent-root': {
-            bgcolor: 'secondary.light',
+            bgcolor: 'accent.main',
           },
         }}
       >
