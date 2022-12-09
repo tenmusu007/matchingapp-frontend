@@ -10,7 +10,6 @@ import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import notMatchedSvg from '../image/userImages/Message.svg';
 import CenterLayout from '../Layout/CenterLayout';
 import Typography from '@mui/material/Typography';
 
@@ -37,7 +36,11 @@ const ChatList = ({ chat, deleteChat }) => {
     <>
       {chat.length === 0 ? (
         <CenterLayout>
-          <img src={notMatchedSvg} alt={notMatchedSvg} width={300} />
+          <img
+            src={process.env.PUBLIC_URL + '/images/notification/Message.svg'}
+            alt={'Not matched yet'}
+            width={300}
+          />
           <Typography variant='h1'>Not matched yet!</Typography>
         </CenterLayout>
       ) : (

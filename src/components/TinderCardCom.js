@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import style from 'styled-components';
-import '../styles/style.css';
+import '../styles/swipe.css';
 import ImageListItem from '@mui/material/ImageListItem';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -10,7 +10,6 @@ import Pill from './Pill';
 import Stack from '@mui/material/Stack';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import axios from 'axios';
-import noMoreSvg from '../image/userImages/Search.svg';
 import CenterLayout from '../Layout/CenterLayout';
 import { useSnackbar } from 'notistack';
 
@@ -80,7 +79,11 @@ const TinderCardCom = ({ usersData }) => {
       {nomore === true ? (
         <>
           <CenterLayout>
-            <img src={noMoreSvg} alt={noMoreSvg} width={300} />
+            <img
+              src={process.env.PUBLIC_URL + '/images/notification/Search.svg'}
+              alt={'No more users'}
+              width={300}
+            />
             <Typography variant='h1'>Oops... No more users!</Typography>
           </CenterLayout>
         </>

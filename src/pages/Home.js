@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import MainLayout from '../Layout/MainLayout';
-// import { pickRandomUser } from '../helper/Helper';
 import axios from 'axios';
 import TinderCardCom from '../components/TinderCardCom';
 import Spinner from '../components/Spinner';
