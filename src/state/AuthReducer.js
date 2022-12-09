@@ -1,31 +1,30 @@
-const AuthReducer = (state, action) => {
+import * as AuthAction from './AuthAction';
+import { initialAuthState } from './InitialState';
+
+const AuthReducer = (state = initialAuthState, action) => {
   switch (action.type) {
-    case 'LOGIN_START':
+    case AuthAction.LOGIN_SUCCESS:
       return {
-        isLogin: false,
-        isFetching: true,
-        error: false,
+        ...state,
+        ...action.payload,
       };
 
-    case 'LOGIN_SUCCESS':
+    case AuthAction.LOGIN_CHECK:
       return {
-        isLogin: action.payload,
-        isFetching: false,
-        error: false,
+        ...state,
+        ...action.payload,
       };
 
-    case 'LOGOUT_SUCCESS':
+    case AuthAction.LOGOUT_SUCCESS:
       return {
-        isLogin: false,
-        isFetching: false,
-        error: false,
+        ...state,
+        ...action.payload,
       };
 
-    case 'LOGIN_ERROR':
+    case AuthAction.LOGIN_ERROR:
       return {
-        isLogin: false,
-        isFetching: false,
-        error: action.payload,
+        ...state,
+        ...action.payload,
       };
 
     default:

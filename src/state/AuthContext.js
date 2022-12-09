@@ -1,17 +1,12 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import AuthReducer from './AuthReducer';
 import { checkIsLogin } from './dispatch';
+import { initialAuthState } from './InitialState';
 
-const initialState = {
-  isLogin: false,
-  isFetching: true,
-  error: false,
-};
-
-export const AuthContext = createContext(initialState);
+export const AuthContext = createContext(initialAuthState);
 
 const AuthContextProvider = (props) => {
-  const [state, dispatch] = useReducer(AuthReducer, initialState);
+  const [state, dispatch] = useReducer(AuthReducer, initialAuthState);
 
   useEffect(() => {
     checkIsLogin(dispatch);
