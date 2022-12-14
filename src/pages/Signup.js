@@ -132,11 +132,6 @@ const Auth = () => {
             </Button>
             <Grid container>
               <Grid item xs sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Link href='#' variant='body2'>
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item xs sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Link component={RouterLink} to='/login' variant='body2'>
                   Login
                 </Link>

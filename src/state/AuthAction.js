@@ -5,6 +5,7 @@ export const LoginSuccessAction = (action) => ({
     isLogin: action.payload,
     isFetching: false,
     error: false,
+    message: '',
   },
 });
 
@@ -15,6 +16,7 @@ export const LoginCheckAction = (action) => ({
     isLogin: action.payload,
     isFetching: false,
     error: false,
+    message: '',
   },
 });
 
@@ -25,6 +27,7 @@ export const LogoutSuccessAction = (action) => ({
     isLogin: action.payload,
     isFetching: false,
     error: false,
+    message: '',
   },
 });
 
@@ -34,6 +37,7 @@ export const LoginErrorAction = (action) => ({
   payload: {
     isLogin: false,
     isFetching: false,
-    error: action.payload,
+    error: true,
+    message: action.payload,
   },
 });

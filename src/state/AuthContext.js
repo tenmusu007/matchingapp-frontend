@@ -19,6 +19,7 @@ const AuthContextProvider = (props) => {
           isLogin: state.isLogin,
           isFetching: state.isFetching,
           error: state.error,
+          message: state.message,
           dispatch,
         }}
       >

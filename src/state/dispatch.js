@@ -13,10 +13,19 @@ export const loginCall = async (user, dispatch) => {
         isLogin: res.data,
         isFetching: false,
         error: false,
+        message: '',
       },
     });
   } catch (err) {
-    dispatch({ type: 'LOGIN_ERROR', payload: err });
+    dispatch({
+      type: 'LOGIN_ERROR',
+      payload: {
+        isLogin: false,
+        isFetching: false,
+        error: true,
+        message: err.response.data,
+      },
+    });
   }
 };
 
@@ -34,6 +43,7 @@ export const checkIsLogin = async (dispatch) => {
         isLogin: res.data,
         isFetching: false,
         error: false,
+        message: '',
       },
     });
   } catch (err) {
@@ -53,6 +63,7 @@ export const logoutCall = async (dispatch) => {
         isLogin: res.data,
         isFetching: false,
         error: false,
+        message: '',
       },
     });
   } catch (err) {

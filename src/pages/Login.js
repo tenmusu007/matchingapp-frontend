@@ -20,14 +20,14 @@ const Login = () => {
   });
   const refEmail = useRef();
   const refPassword = useRef();
-  const { isLogin, dispatch } = useContext(AuthContext);
+  const { isLogin, dispatch, message } = useContext(AuthContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (
       checkEmail(refEmail.current.value, email, setEmail) &&
-      checkPassword(refPassword.current.value, password, setPassword) === true
+      checkPassword(refPassword.current.value, password, setPassword)
     ) {
       loginCall(
         {
@@ -64,8 +64,16 @@ const Login = () => {
             sx={{ mt: 1 }}
           >
             <TextField
-              error={email.input === ''}
-              helperText={email.input === '' ? email.errMessage : ''}
+              error={
+                email.input === '' || message === 'We can not find the user'
+              }
+              helperText={
+                email.input === ''
+                  ? email.errMessage
+                  : message === 'We can not find the user'
+                  ? message
+                  : ''
+              }
               margin='normal'
               required
               fullWidth
@@ -77,8 +85,14 @@ const Login = () => {
               inputRef={refEmail}
             />
             <TextField
-              error={password.input === ''}
-              helperText={password.input === '' ? password.errMessage : ''}
+              error={password.input === '' || message === 'password is wrong'}
+              helperText={
+                password.input === ''
+                  ? password.errMessage
+                  : message === 'password is wrong'
+                  ? message
+                  : ''
+              }
               margin='normal'
               required
               fullWidth
