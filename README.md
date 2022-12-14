@@ -1,6 +1,6 @@
 ## Chillip frontend
 
-_Matching app with swiping function and chatting!_
+_This Matching app is called Chillip with swiping function and chatting!_
 
 ![pic1](https://user-images.githubusercontent.com/40518785/207673820-9863ac28-cca0-48a8-b249-a06ac4759ba2.png)
 
