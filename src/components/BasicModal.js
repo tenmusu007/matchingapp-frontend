@@ -14,7 +14,6 @@ import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import BoxLayout from '../Layout/BoxLayout';
 import axios from 'axios';
-import { courses, genders, sexualOrientations } from '../Data/SelectBoxOptions';
 import imageCompression from 'browser-image-compression';
 import { useSnackbar } from 'notistack';
 
