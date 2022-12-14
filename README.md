@@ -10,7 +10,7 @@ Made this app for finding friends taking a defferent course in our schhol to do 
 
 - **Check App:** [Hit new people up!](https://main.d1q845p9ygn1yh.amplifyapp.com/)
 
-### Why made me create this app?
+### Why made us create this app?
 
 Our school provides several courses such as web development, UI/UX design, Degital Marketing but we feel these courses are little closed communities. If we collaborate with students in the other courses, we can try to make businesses, get more practical workshops, cultivate experiences. We hope this app helps students carrier and expand their commnunity.
 
