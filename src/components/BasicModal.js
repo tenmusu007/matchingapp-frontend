@@ -73,25 +73,58 @@ export default function BasicModal(props) {
   // these data are from file
   const [course, setCourse] = useState('NONE');
   const [gender, setGender] = useState(0);
+  const [gendersData, setGendersData] = useState([]);
+  const [courseData, setCourseData] = useState([]);
+  const [sexOrientationData, setSexOrientationData] = useState([]);
+  // const [inputInterestsVal, setInputInterestsVal] = useState('');
+
   const [interests, setInterests] = useState([]);
   const [inputInterestsVal, setInputInterestsVal] = useState('');
   const [sexualOri, setSexualOri] = useState([]);
   const [inputSexualOriVal, setInputSexualOriVal] = useState('');
 
   useEffect(() => {
-    const fetchSelectOptionData = async () => {
-      const res = await axios.get(
+    const fetchInterestsOptionData = async () => {
+      const interestsData = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/interest/interests`
       );
-      setInterestsData(res.data);
-      setCourse(user?.course);
-      setGender(user?.gender);
-      setSexualOri(user?.sexual_orientation);
-      setInterests(user?.interests);
-      setImageUrl(user?.image);
+      setInterestsData(interestsData.data);
     };
 
-    fetchSelectOptionData();
+    const fetchGendersOptionData = async () => {
+      const genderData = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/getformdata/formdata`,
+        { collection: 'genders' }
+      );
+      setGendersData(genderData.data);
+    };
+
+    const fetchCourseOptionData = async () => {
+      const courseData = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/getformdata/formdata`,
+        { collection: 'courses' }
+      );
+      setCourseData(courseData.data);
+    };
+
+    const fetchSexOrientationOptionData = async () => {
+      const sexOrientaionData = await axios.post(
+        `${process.env.REACT_APP_SERVER_URL}/getformdata/formdata`,
+        { collection: 'preferences' }
+      );
+      setSexOrientationData(sexOrientaionData.data);
+    };
+
+    fetchInterestsOptionData();
+    fetchCourseOptionData();
+    fetchGendersOptionData();
+    fetchSexOrientationOptionData();
+
+    setCourse(user?.course);
+    setGender(user?.gender);
+    setSexualOri(user?.sexual_orientation);
+    setInterests(user?.interests);
+    setImageUrl(user?.image);
   }, [user]);
 
   const compressImage = async (image) => {
@@ -291,7 +324,7 @@ export default function BasicModal(props) {
               inputRef={courseRef}
               onChange={(e) => handleState(e, setCourse)}
             >
-              {courses.map((option) => (
+              {courseData.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
@@ -311,7 +344,7 @@ export default function BasicModal(props) {
               defaultValue={user?.gender}
               onChange={(e) => handleState(e, setGender)}
             >
-              {genders.map((option) => (
+              {gendersData?.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
@@ -328,7 +361,7 @@ export default function BasicModal(props) {
               limitTags={5}
               name='sexualOrientation'
               id='multiple-sexualOrientation'
-              options={sexualOrientations}
+              options={sexOrientationData}
               getOptionLabel={(option) => option.label}
               isOptionEqualToValue={(option, value) => option.id === value.id}
               value={sexualOri}
